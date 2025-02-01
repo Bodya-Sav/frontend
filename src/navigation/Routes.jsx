@@ -9,3 +9,5 @@ const AppRoutes = () => (
     <Route index element={<ShedulePage />} />
   </Routes>
 );
+
+export default AppRoutes;
