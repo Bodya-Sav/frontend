@@ -75,7 +75,7 @@ export default function ShedulePage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ scheduleIds: selectedSchedules }),
+          body: JSON.stringify({ selectedSchedules }),
         }
       );
 
