@@ -65,7 +65,7 @@ export default function ShedulePage() {
         return;
       }
 
-      console.log(JSON.stringify({ scheduleIds: selectedSchedules }));
+      console.log(JSON.stringify({ id: selectedSchedules }));
 
       console.log("Отправка запроса на удаление расписания...");
       const response = await fetch(
