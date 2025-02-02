@@ -2,13 +2,57 @@ import { useState, useEffect } from "react";
 import { Button, Card, Input } from "@telegram-apps/telegram-ui";
 
 import ScheduleComponent from "../components/schedule/ScheduleComponent";
+import TimePickerComponent from "../components/schedule/TimePickerComponent";
 
 const webapp = window.Telegram.WebApp;
 
 export default function ShedulePage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
+
   const [schedule, setSchedule] = useState(null);
+  const [showTimePicker, setShowTimePicker] = useState(false); // Показываем/скрываем TimePickerComponent
+  const [selectedDateTime, setSelectedDateTime] = useState(null); // Выбранные дата и время
+
+  const handleSelectDateTime = async (data) => {
+    <TimePickerComponent />;
+
+    try {
+      console.log(
+        "Отправка запроса админского добавления расписания на сервер..."
+      );
+
+      // Здесь добавь свой запрос на сервер
+      const response = await fetch(
+        `https://pxmx-home.ddns.net:3001/api/mini_app/add_free_schedule`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // Здесь передай нужные данные
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Ответ сервера:", result);
+
+      // Дальнейшие действия после успешного запроса
+      // Обновляем расписание после добавления
+      fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule")
+        .then((response) => response.json())
+        .then((json) => setSchedule(json))
+        .catch((error) => console.error("Ошибка загрузки данных:", error));
+    } catch (error) {
+      console.error("Ошибка при отправке запроса:", error);
+    }
+  };
 
   useEffect(() => {
     webapp.ready();
@@ -83,6 +127,10 @@ export default function ShedulePage() {
             <div>
               <h2>Привет, админ</h2>
               <p>Дополнительные функции для администратора</p>
+              <Button onClick={() => setShowTimePicker(true)}>Добавить</Button>
+              {showTimePicker && (
+                <TimePickerComponent onSelect={handleSelectDateTime} />
+              )}
             </div>
           ) : (
             <div>

@@ -1,0 +1,34 @@
+import { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+export default function TimePickerComponent({ onSelect }) {
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  const handleConfirm = () => {
+    if (!selectedDate) {
+      alert("Выберите дату и время!");
+      return;
+    }
+
+    const data = {
+      date: selectedDate.toISOString().split("T")[0], // YYYY-MM-DD
+      time: selectedDate.toTimeString().split(" ")[0], // HH:MM:SS
+    };
+
+    onSelect(data); // Возвращаем JSON в `ShedulePage`
+  };
+
+  return (
+    <div>
+      <h3>Выберите дату и время:</h3>
+      <DatePicker
+        selected={selectedDate}
+        onChange={(date) => setSelectedDate(date)}
+        showTimeSelect
+        dateFormat="Pp"
+      />
+      <button onClick={handleConfirm}>Подтвердить</button>
+    </div>
+  );
+}
