@@ -14,6 +14,7 @@ export default function ShedulePage() {
   const [schedule, setSchedule] = useState(null);
   const [showTimePicker, setShowTimePicker] = useState(false); // Показываем/скрываем TimePickerComponent
   const [selectedDateTime, setSelectedDateTime] = useState(null); // Выбранные дата и время
+  const [selectedSchedules, setSelectedSchedules] = useState([]);
 
   const handleSelectDateTime = async (data) => {
     setSelectedDateTime(data); // Сохраняем выбранные дату и время
