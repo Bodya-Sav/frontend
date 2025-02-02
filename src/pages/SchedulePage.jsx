@@ -3,6 +3,7 @@ import { Button, Card, Input } from "@telegram-apps/telegram-ui";
 
 import ScheduleComponent from "../components/schedule/ScheduleComponent";
 import TimePickerComponent from "../components/schedule/TimePickerComponent";
+import DeleteSheduleComponent from "../components/schedule/DeleteSheduleComponent";
 
 const webapp = window.Telegram.WebApp;
 
@@ -42,6 +43,8 @@ export default function ShedulePage() {
       const result = await response.json();
       console.log("Ответ сервера:", result);
 
+      setShowTimePicker(false);
+
       // Дальнейшие действия после успешного запроса
       // Обновляем расписание после добавления
       fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule")
@@ -50,6 +53,43 @@ export default function ShedulePage() {
         .catch((error) => console.error("Ошибка загрузки данных:", error));
     } catch (error) {
       console.error("Ошибка при отправке запроса:", error);
+    }
+  };
+
+  const handleDeleteSchedules = async () => {
+    try {
+      if (selectedSchedules.length === 0) {
+        console.log("Нечего удалять");
+        return;
+      }
+
+      console.log("Отправка запроса на удаление расписания...");
+      const response = await fetch(
+        `https://pxmx-home.ddns.net:3001/api/mini_app/delete_schedule`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ scheduleIds: selectedSchedules }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Ошибка: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log("Ответ сервера:", result);
+
+      // Обновляем расписание после удаления
+      fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule")
+        .then((response) => response.json())
+        .then((json) => setSchedule(json))
+        .catch((error) => console.error("Ошибка загрузки данных:", error));
+      setSelectedSchedules([]); // Очищаем выбранные записи
+    } catch (error) {
+      console.error("Ошибка при отправке запроса на удаление:", error);
     }
   };
 
@@ -117,7 +157,6 @@ export default function ShedulePage() {
     <div>
       {isAuth ? (
         <div>
-          <h1>Расписание</h1>
           {schedule ? (
             <div>
               <ScheduleComponent schedule={schedule} />
@@ -131,10 +170,20 @@ export default function ShedulePage() {
             <div>
               <h2>Привет, админ</h2>
               <p>Дополнительные функции для администратора</p>
-              <Button onClick={() => setShowTimePicker(true)}>Добавить</Button>
-              {showTimePicker && (
-                <TimePickerComponent onSelect={handleSelectDateTime} />
-              )}
+              <div>
+                <Button onClick={() => setShowTimePicker(true)}>
+                  Добавить
+                </Button>
+                {showTimePicker && (
+                  <TimePickerComponent onSelect={handleSelectDateTime} />
+                )}
+                <DeleteSheduleComponent
+                  schedule={schedule}
+                  selectedSchedules={selectedSchedules}
+                  setSelectedSchedules={setSelectedSchedules}
+                  handleDeleteSchedules={handleDeleteSchedules}
+                />
+              </div>
             </div>
           ) : (
             <div>
