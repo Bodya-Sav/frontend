@@ -27,3 +27,5 @@ const ScheduleComponent = ({ schedule }) => {
     </div>
   );
 };
+
+export default ScheduleComponent;

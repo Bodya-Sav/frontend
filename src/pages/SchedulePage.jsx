@@ -79,7 +79,6 @@ export default function ShedulePage() {
               <p>оно пустое братан</p>
             </div>
           )}
-          <p>Здесь будет расписание</p>
           {isAdmin ? (
             <div>
               <h2>Привет, админ</h2>
