@@ -1,9 +1,12 @@
 import AppRoutes from "./navigation/Routes";
+import { AppRoot } from "@telegram-apps/telegram-ui";
 
 function App() {
   return (
     <>
-      <AppRoutes />
+      <AppRoot>
+        <AppRoutes />
+      </AppRoot>
     </>
   );
 }
