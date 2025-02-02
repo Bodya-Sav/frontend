@@ -75,7 +75,7 @@ export default function ShedulePage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ selectedSchedules }),
+          body: JSON.stringify({ id: selectedSchedules }),
         }
       );
 
@@ -85,6 +85,8 @@ export default function ShedulePage() {
 
       const result = await response.json();
       console.log("Ответ сервера:", result);
+
+      console.log("обновляем расписание");
 
       // Обновляем расписание после удаления
       fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule")
