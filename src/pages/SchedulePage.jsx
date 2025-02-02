@@ -12,8 +12,9 @@ export default function ShedulePage() {
   const [isAuth, setIsAuth] = useState(false);
 
   const [schedule, setSchedule] = useState(null);
-  const [showTimePicker, setShowTimePicker] = useState(false); // Показываем/скрываем TimePickerComponent
-  const [selectedDateTime, setSelectedDateTime] = useState(null); // Выбранные дата и время
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [selectedDateTime, setSelectedDateTime] = useState(null);
   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
   const handleSelectDateTime = async (data) => {
@@ -63,6 +64,8 @@ export default function ShedulePage() {
         console.log("Нечего удалять");
         return;
       }
+
+      console.log(JSON.stringify({ scheduleIds: selectedSchedules }));
 
       console.log("Отправка запроса на удаление расписания...");
       const response = await fetch(
@@ -178,12 +181,15 @@ export default function ShedulePage() {
                 {showTimePicker && (
                   <TimePickerComponent onSelect={handleSelectDateTime} />
                 )}
-                <DeleteSheduleComponent
-                  schedule={schedule}
-                  selectedSchedules={selectedSchedules}
-                  setSelectedSchedules={setSelectedSchedules}
-                  handleDeleteSchedules={handleDeleteSchedules}
-                />
+                <Button onClick={() => setShowDelete(true)}>удаление</Button>
+                {showDelete && (
+                  <DeleteSheduleComponent
+                    schedule={schedule}
+                    selectedSchedules={selectedSchedules}
+                    setSelectedSchedules={setSelectedSchedules}
+                    handleDeleteSchedules={handleDeleteSchedules}
+                  />
+                )}
               </div>
             </div>
           ) : (
