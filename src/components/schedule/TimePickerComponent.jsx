@@ -20,7 +20,13 @@ export default function TimePickerComponent({ onSelect }) {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <h3>Выберите дату и время:</h3>
       <DatePicker
         selected={selectedDate}
