@@ -4,7 +4,7 @@ const ScheduleComponent = ({ schedule }) => {
   }
 
   return (
-    <div>
+    <div style={{ display: flex, justifyItems: center }}>
       <h2>Расписание</h2>
       <ul>
         {schedule.result.map(({ id, fio, themes, data, time }) => {
