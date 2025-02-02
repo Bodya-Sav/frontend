@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 
-const ScheduleSelector = ({
+const ScheduleComponent = ({
   schedule,
   selectedSchedules,
   setSelectedSchedules,
@@ -37,4 +37,4 @@ const ScheduleSelector = ({
   );
 };
 
-export default ScheduleSelector;
+export default ScheduleComponent;
