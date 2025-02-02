@@ -33,6 +33,8 @@ export default function TimePickerComponent({ onSelect }) {
         onChange={(date) => setSelectedDate(date)}
         showTimeSelect
         dateFormat="Pp"
+        timeFormat="HH:mm"
+        timeIntervals={120}
       />
       <button onClick={handleConfirm}>Подтвердить</button>
     </div>
