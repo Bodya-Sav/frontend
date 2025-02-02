@@ -15,6 +15,7 @@ export default function ShedulePage() {
   const [selectedDateTime, setSelectedDateTime] = useState(null); // Выбранные дата и время
 
   const handleSelectDateTime = async (data) => {
+    setSelectedDateTime(data); // Сохраняем выбранные дату и время
     <TimePickerComponent />;
 
     try {
@@ -30,9 +31,7 @@ export default function ShedulePage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            // Здесь передай нужные данные
-          }),
+          body: JSON.stringify(data),
         }
       );
 
@@ -93,16 +92,21 @@ export default function ShedulePage() {
         console.error("Ошибка загрузки данных:", error);
       });
 
-    fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule")
+    fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error("Ошибка сети");
         }
         return response.json();
       })
-      .then((json) => {
-        console.log("Полученное расписание: ", json);
-        setSchedule(json);
+      .then((data) => {
+        console.log("Полученное расписание: ", data);
+        setSchedule(data);
       })
       .catch((error) => {
         console.error("Ошибка загрузки данных:", error);
@@ -114,7 +118,7 @@ export default function ShedulePage() {
       {isAuth ? (
         <div>
           <h1>Расписание</h1>
-          {!schedule === null ? (
+          {schedule ? (
             <div>
               <ScheduleComponent schedule={schedule} />
             </div>
