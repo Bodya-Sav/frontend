@@ -21,7 +21,7 @@ const ScheduleComponent = ({
     <div>
       <h3>Выберите расписания для удаления:</h3>
       <div>
-        {schedule.map((item) => (
+        {schedule.result.map((item) => (
           <div key={item.id}>
             <input
               type="checkbox"
