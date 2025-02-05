@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Card, Input } from "@telegram-apps/telegram-ui";
+import { Button } from "@telegram-apps/telegram-ui";
 
 import ScheduleComponent from "../components/schedule/ScheduleComponent";
 import TimePickerComponent from "../components/schedule/TimePickerComponent";
