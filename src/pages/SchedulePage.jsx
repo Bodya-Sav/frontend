@@ -57,7 +57,7 @@ export default function SchedulePage() {
       {schedule ? (
         <ScheduleComponent schedule={schedule} />
       ) : (
-        <p>Расписание отсутствует</p>
+        <p>Загрузка расписания</p>
       )}
       {isAdmin && (
         <div>
