@@ -210,12 +210,11 @@ const NavigationBar = () => {
               justifyContent: "center",
             }}
           >
-            <div
+            <svg
+              width="30px"
+              height="30px"
               style={{
-                width: "30px",
-                height: "30px",
                 backgroundColor: isActive ? "#0088cc" : "#000000",
-                // Применяем CSS-маску для отображения иконки
                 mask: `url(${iconUrl}) no-repeat center`,
                 WebkitMask: `url(${iconUrl}) no-repeat center`,
                 maskSize: "contain",
