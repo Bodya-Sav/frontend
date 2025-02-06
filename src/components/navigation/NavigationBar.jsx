@@ -67,7 +67,7 @@ const NavigationBar = () => {
             style={{
               backgroundColor: isActive ? "#0088cc" : "#fff",
               color: isActive ? "#fff" : "#000",
-              padding: "8px 12px",
+              padding: "5px",
               borderRadius: "4px",
               height: "40px",
             }}
