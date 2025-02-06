@@ -1,4 +1,4 @@
-import { fetchWrapper } from "./Service";
+import { fetchWrapper } from "./FetchWrapper";
 
 export const addFreeSchedule = async (data) => {
   const body = JSON.stringify(data);
