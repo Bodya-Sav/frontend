@@ -39,6 +39,7 @@ export default function SchedulePage() {
       if (selectedSchedules.length === 0) return;
       await deleteSchedule(selectedSchedules);
       setSelectedSchedules([]);
+      setShowDelete(false);
       const updatedSchedule = await getAllSchedule();
       setSchedule(updatedSchedule);
     } catch (error) {
@@ -62,25 +63,28 @@ export default function SchedulePage() {
       }}
     >
       {schedule ? (
-        <ScheduleComponent schedule={schedule} />
+        <ScheduleComponent
+          schedule={schedule}
+          deleteMode={deleteMode}
+          selectedSchedules={selectedSchedules}
+          setSelectedSchedules={setSelectedSchedules}
+          handleDeleteSchedules={handleDeleteSchedules}
+        />
       ) : (
         <p>Загрузка расписания</p>
       )}
       {isAdmin && (
-        <div>
+        <div style={{ marginTop: "1em" }}>
           <Button onClick={() => setShowTimePicker(true)}>Добавить</Button>
           {showTimePicker && (
             <TimePickerComponent onSelect={handleSelectDateTime} />
           )}
-          <Button onClick={() => setShowDelete(true)}>Удалить</Button>
-          {showDelete && (
-            <DeleteSheduleComponent
-              schedule={schedule}
-              selectedSchedules={selectedSchedules}
-              setSelectedSchedules={setSelectedSchedules}
-              handleDeleteSchedules={handleDeleteSchedules}
-            />
-          )}
+          <Button
+            onClick={() => setDeleteMode((prev) => !prev)}
+            style={{ marginLeft: "1em" }}
+          >
+            {deleteMode ? "Отмена удаления" : "Удалить"}
+          </Button>
         </div>
       )}
     </div>
