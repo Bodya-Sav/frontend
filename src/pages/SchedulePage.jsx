@@ -46,6 +46,10 @@ export default function SchedulePage() {
     } catch (error) {
       console.error("Ошибка при удалении расписания:", error);
     }
+
+    getAllSchedule()
+      .then(setSchedule)
+      .catch((error) => console.error("Ошибка загрузки расписания:", error));
   };
 
   useEffect(() => {
