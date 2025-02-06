@@ -3,7 +3,7 @@ import { AppRoot } from "@telegram-apps/telegram-ui";
 
 import AppRoutes from "./navigation/Routes";
 import NavigationBar from "./components/navigation/NavigationBar";
-import { checkAuth } from "../services/AuthService";
+import { checkAuth } from "./services/AuthService";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const webapp = window.Telegram.WebApp;
