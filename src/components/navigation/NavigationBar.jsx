@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@telegram-apps/telegram-ui";
 import { ROUTES } from "../../navigation/routes";
@@ -14,6 +14,32 @@ const navItems = [
 const NavigationBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Флаг, показывающий, открыта ли клавиатура (на основе изменения высоты окна)
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+  // Фиксируем исходную высоту окна при монтировании компонента
+  const [initialHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const currentHeight = window.innerHeight;
+      // Если высота окна уменьшилась более чем на 100px по сравнению с исходной, считаем, что клавиатура открыта
+      if (initialHeight - currentHeight > 100) {
+        setKeyboardOpen(true);
+      } else {
+        setKeyboardOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    // Очистка слушателя при размонтировании
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [initialHeight]);
+
+  // Если клавиатура открыта, не отображаем панель
+  if (keyboardOpen) return null;
 
   return (
     <div
@@ -43,6 +69,7 @@ const NavigationBar = () => {
               color: isActive ? "#fff" : "#000",
               padding: "8px 12px",
               borderRadius: "4px",
+              height: "40px",
             }}
           >
             {item.label}
