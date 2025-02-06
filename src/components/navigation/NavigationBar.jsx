@@ -130,17 +130,21 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Button } from "@telegram-apps/telegram-ui";
 import { ROUTES } from "../../navigation/routes";
 import { AuthContext } from "../../context/AuthContext";
 
 import UsersIcon from "../../assets/icons/users.svg";
-import Calendar from "../../assets/icons/calendar-date.svg";
+import CalendarIcon from "../../assets/icons/calendar-date.svg";
 
 // Массив с описанием вкладок (страниц)
 const navItems = [
-  { id: "users", label: "Пользователи", path: ROUTES.USERS },
-  { id: "schedule", label: "Расписание", path: ROUTES.SHEDULE },
+  { id: "users", label: "Пользователи", path: ROUTES.USERS, icon: UsersIcon },
+  {
+    id: "schedule",
+    label: "Расписание",
+    path: ROUTES.SHEDULE,
+    icon: CalendarIcon,
+  },
 ];
 
 const NavigationBar = () => {
@@ -155,11 +159,7 @@ const NavigationBar = () => {
   useEffect(() => {
     const handleResize = () => {
       const currentHeight = window.innerHeight;
-      if (initialHeight - currentHeight > 100) {
-        setKeyboardOpen(true);
-      } else {
-        setKeyboardOpen(false);
-      }
+      setKeyboardOpen(initialHeight - currentHeight > 100);
     };
 
     window.addEventListener("resize", handleResize);
@@ -172,56 +172,49 @@ const NavigationBar = () => {
   return (
     <div
       style={{
-        position: "fixed", // фиксированное позиционирование
-        bottom: 0, // прижато к нижней части экрана
-        left: 0, // прижато к левому краю
-        width: "100%", // занимает всю ширину экрана
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        width: "100%",
         display: "flex",
         justifyContent: "space-around",
         padding: "10px",
         borderTop: "1px solid #ccc",
         backgroundColor: "#fff",
-        zIndex: 1000, // чтобы панель была поверх прочего контента
+        zIndex: 1000,
       }}
     >
       {navItems.map((item) => {
-        // Если элемент с id "users" и пользователь не является админом — не рендерим кнопку
-        if (item.id === "users" && !isAdmin) {
-          return null;
-        }
-        // Определяем, активна ли текущая вкладка
+        if (item.id === "users" && !isAdmin) return null;
+
         const isActive = location.pathname === item.path;
-        // Выбираем URL иконки
-        const iconUrl = item.id === "users" ? UsersIcon : Calendar;
 
         return (
-          <Button
+          <button
             key={item.id}
             onClick={() => navigate(item.path)}
             style={{
-              flex: 1, // каждая вкладка занимает равное пространство
-              backgroundColor: "transparent",
+              flex: 1,
+              background: "transparent",
               border: "none",
-              padding: "5px",
-              borderRadius: "4px",
-              height: "40px",
+              padding: "10px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
             <div
-              width="30px"
-              height="30px"
               style={{
-                backgroundColor: isActive ? "#0088cc" : "#000000",
-                mask: `url(${iconUrl}) no-repeat center`,
-                WebkitMask: `url(${iconUrl}) no-repeat center`,
+                width: "24px",
+                height: "24px",
+                backgroundColor: isActive ? "#0088cc" : "#000",
+                mask: `url(${item.icon}) no-repeat center`,
+                WebkitMask: `url(${item.icon}) no-repeat center`,
                 maskSize: "contain",
                 WebkitMaskSize: "contain",
               }}
             />
-          </Button>
+          </button>
         );
       })}
     </div>
