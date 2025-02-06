@@ -28,7 +28,7 @@ const NavigationBar = () => {
     >
       {navItems.map((item) => {
         // Определяем, активна ли текущая вкладка и начинается ли текущий путь с заданного значения
-        const isActive = location.pathname(item.path);
+        const isActive = location.pathname === item.path;
 
         return (
           <Button
