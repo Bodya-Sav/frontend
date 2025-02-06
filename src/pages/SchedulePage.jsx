@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 
 import ScheduleComponent from "../components/schedule/ScheduleComponent";

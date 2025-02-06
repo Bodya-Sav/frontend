@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AppRoot } from "@telegram-apps/telegram-ui";
 
 import AppRoutes from "./navigation/Routes";
