@@ -18,7 +18,8 @@ export default function SchedulePage() {
 
   const [schedule, setSchedule] = useState(null);
   const [showTimePicker, setShowTimePicker] = useState(false);
-  const [showDelete, setShowDelete] = useState(false);
+  // Флаг, отвечающий за включение/выключение режима удаления (показываются чекбоксы)
+  const [deleteMode, setDeleteMode] = useState(false);
   const [selectedDateTime, setSelectedDateTime] = useState(null);
   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
