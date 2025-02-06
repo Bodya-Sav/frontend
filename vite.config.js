@@ -4,7 +4,7 @@ import fs from "fs";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), svgr()],
   server: {
     host: "0.0.0.0",
     https: {
