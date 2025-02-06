@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
+
 import ScheduleComponent from "../components/schedule/ScheduleComponent";
 import TimePickerComponent from "../components/schedule/TimePickerComponent";
 import DeleteSheduleComponent from "../components/schedule/DeleteSheduleComponent";
@@ -9,14 +10,12 @@ import {
   getAllSchedule,
   deleteSchedule,
 } from "../services/ScheduleService";
-import { checkAuth } from "../services/AuthService";
 
-const webapp = window.Telegram.WebApp;
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function SchedulePage() {
-  const [loading, setLoading] = useState(true);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
+  const { isAdmin } = useContext(AuthContext);
+
   const [schedule, setSchedule] = useState(null);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -48,64 +47,34 @@ export default function SchedulePage() {
   };
 
   useEffect(() => {
-    webapp.ready();
-    const chat_id = webapp.initDataUnsafe.user.id;
-    checkAuth(chat_id)
-      .then((data) => {
-        setIsAdmin(data.result.isadmin);
-        setIsAuth(data.result.isauth);
-        setLoading(false);
-      })
-      .catch((error) => console.error("Ошибка авторизации:", error));
-
     getAllSchedule()
       .then(setSchedule)
       .catch((error) => console.error("Ошибка загрузки расписания:", error));
   }, []);
 
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        Загрузка...
-      </div>
-    );
-  }
-
   return (
     <div>
-      {isAuth ? (
-        <>
-          {schedule ? (
-            <ScheduleComponent schedule={schedule} />
-          ) : (
-            <p>Расписание отсутствует</p>
-          )}
-          {isAdmin && (
-            <div>
-              <Button onClick={() => setShowTimePicker(true)}>Добавить</Button>
-              {showTimePicker && (
-                <TimePickerComponent onSelect={handleSelectDateTime} />
-              )}
-              <Button onClick={() => setShowDelete(true)}>Удалить</Button>
-              {showDelete && (
-                <DeleteSheduleComponent
-                  schedule={schedule}
-                  selectedSchedules={selectedSchedules}
-                  setSelectedSchedules={setSelectedSchedules}
-                  handleDeleteSchedules={handleDeleteSchedules}
-                />
-              )}
-            </div>
-          )}
-        </>
+      {schedule ? (
+        <ScheduleComponent schedule={schedule} />
       ) : (
-        <h1>Дождитесь подтверждения регистрации</h1>
+        <p>Расписание отсутствует</p>
+      )}
+      {isAdmin && (
+        <div>
+          <Button onClick={() => setShowTimePicker(true)}>Добавить</Button>
+          {showTimePicker && (
+            <TimePickerComponent onSelect={handleSelectDateTime} />
+          )}
+          <Button onClick={() => setShowDelete(true)}>Удалить</Button>
+          {showDelete && (
+            <DeleteSheduleComponent
+              schedule={schedule}
+              selectedSchedules={selectedSchedules}
+              setSelectedSchedules={setSelectedSchedules}
+              handleDeleteSchedules={handleDeleteSchedules}
+            />
+          )}
+        </div>
       )}
     </div>
   );
