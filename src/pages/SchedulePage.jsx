@@ -68,6 +68,7 @@ export default function SchedulePage() {
         alignItems: "center",
         justifyItems: "center",
         height: "auto",
+        marginBottom: "100px",
       }}
     >
       {schedule ? (
