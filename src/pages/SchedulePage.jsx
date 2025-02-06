@@ -17,7 +17,8 @@ export default function SchedulePage() {
   const { isAdmin } = useContext(AuthContext);
 
   const [schedule, setSchedule] = useState(null);
-  const [showTimePicker, setShowTimePicker] = useState(false);
+  // Режим добавления – аналог deleteMode
+  const [addMode, setAddMode] = useState(false);
   // Флаг, отвечающий за включение/выключение режима удаления (показываются чекбоксы)
   const [deleteMode, setDeleteMode] = useState(false);
   const [selectedDateTime, setSelectedDateTime] = useState(null);
@@ -27,7 +28,8 @@ export default function SchedulePage() {
     setSelectedDateTime(data);
     try {
       await addFreeSchedule(data);
-      setShowTimePicker(false);
+      // Закрываем режим добавления после успешного добавления
+      setAddMode(false);
       const updatedSchedule = await getAllSchedule();
       setSchedule(updatedSchedule);
     } catch (error) {
@@ -80,10 +82,10 @@ export default function SchedulePage() {
       )}
       {isAdmin && (
         <div style={{ marginTop: "1em" }}>
-          <Button onClick={() => setShowTimePicker(true)}>Добавить</Button>
-          {showTimePicker && (
-            <TimePickerComponent onSelect={handleSelectDateTime} />
-          )}
+          <Button onClick={() => setAddMode((prev) => !prev)}>
+            {addMode ? "Отмена добавления" : "Добавить"}
+          </Button>
+          {addMode && <TimePickerComponent onSelect={handleSelectDateTime} />}
           <Button
             onClick={() => setDeleteMode((prev) => !prev)}
             style={{ marginLeft: "1em" }}
