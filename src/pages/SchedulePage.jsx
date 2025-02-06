@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
-
 import ScheduleComponent from "../components/schedule/ScheduleComponent";
 import TimePickerComponent from "../components/schedule/TimePickerComponent";
 import DeleteSheduleComponent from "../components/schedule/DeleteSheduleComponent";
 
+import {
+  addFreeSchedule,
+  getAllSchedule,
+  deleteSchedule,
+} from "../services/ScheduleService";
+import { checkAuth } from "../services/AuthService";
+
 const webapp = window.Telegram.WebApp;
 
-export default function ShedulePage() {
+export default function SchedulePage() {
+  const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-
   const [schedule, setSchedule] = useState(null);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
@@ -18,193 +24,88 @@ export default function ShedulePage() {
   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
   const handleSelectDateTime = async (data) => {
-    setSelectedDateTime(data); // Сохраняем выбранные дату и время
-    <TimePickerComponent />;
-
+    setSelectedDateTime(data);
     try {
-      console.log(
-        "Отправка запроса админского добавления расписания на сервер..."
-      );
-
-      // Здесь добавь свой запрос на сервер
-      const response = await fetch(
-        `https://pxmx-home.ddns.net:3001/api/mini_app/add_free_schedule`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Ошибка: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log("Ответ сервера:", result);
-
+      await addFreeSchedule(data);
       setShowTimePicker(false);
-
-      // Дальнейшие действия после успешного запроса
-      // Обновляем расписание после добавления
-      fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule")
-        .then((response) => response.json())
-        .then((json) => setSchedule(json))
-        .catch((error) => console.error("Ошибка загрузки данных:", error));
+      const updatedSchedule = await getAllSchedule();
+      setSchedule(updatedSchedule);
     } catch (error) {
-      console.error("Ошибка при отправке запроса:", error);
+      console.error("Ошибка при добавлении расписания:", error);
     }
   };
 
   const handleDeleteSchedules = async () => {
     try {
-      if (selectedSchedules.length === 0) {
-        console.log("Нечего удалять");
-        return;
-      }
-
-      console.log(JSON.stringify({ id: selectedSchedules }));
-
-      console.log("Отправка запроса на удаление расписания...");
-      const response = await fetch(
-        `https://pxmx-home.ddns.net:3001/api/mini_app/delete_schedule`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: selectedSchedules }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Ошибка: ${response.status}`);
-      }
-
-      const result = await response.json();
-      console.log("Ответ сервера:", result);
-
-      console.log("обновляем расписание");
-
-      // Обновляем расписание после удаления
-      fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule")
-        .then((response) => response.json())
-        .then((json) => setSchedule(json))
-        .catch((error) => console.error("Ошибка загрузки данных:", error));
-      setSelectedSchedules([]); // Очищаем выбранные записи
+      if (selectedSchedules.length === 0) return;
+      await deleteSchedule(selectedSchedules);
+      setSelectedSchedules([]);
+      const updatedSchedule = await getAllSchedule();
+      setSchedule(updatedSchedule);
     } catch (error) {
-      console.error("Ошибка при отправке запроса на удаление:", error);
+      console.error("Ошибка при удалении расписания:", error);
     }
   };
 
   useEffect(() => {
     webapp.ready();
-
-    console.log("initDataUnsafe:", webapp.initDataUnsafe.user.id);
     const chat_id = webapp.initDataUnsafe.user.id;
-
-    // запрос на проверку авторизованного пользователя
-    fetch(`https://pxmx-home.ddns.net:3001/api/mini_app/check_auth`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ chat_id }),
-    })
-      .then((response) => {
-        console.log(JSON.stringify({ chat_id }));
-
-        if (!response.ok) {
-          throw new Error("Ошибка сети");
-        }
-        return response.json();
-      })
+    checkAuth(chat_id)
       .then((data) => {
-        console.log("Ответ от сервера:", data);
-
         setIsAdmin(data.result.isadmin);
-
         setIsAuth(data.result.isauth);
+        setLoading(false);
+      })
+      .catch((error) => console.error("Ошибка авторизации:", error));
 
-        if (data.result.isauth) {
-          console.log("пользователь авторизован");
-        } else {
-          console.log("пользователь не авторизован");
-        }
-      })
-      .catch((error) => {
-        console.error("Ошибка загрузки данных:", error);
-      });
-
-    fetch("https://pxmx-home.ddns.net:3001/api/mini_app/get_all_schedule", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Ошибка сети");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Полученное расписание: ", data);
-        setSchedule(data);
-      })
-      .catch((error) => {
-        console.error("Ошибка загрузки данных:", error);
-      });
+    getAllSchedule()
+      .then(setSchedule)
+      .catch((error) => console.error("Ошибка загрузки расписания:", error));
   }, []);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        Загрузка...
+      </div>
+    );
+  }
 
   return (
     <div>
       {isAuth ? (
-        <div>
+        <>
           {schedule ? (
-            <div>
-              <ScheduleComponent schedule={schedule} />
-            </div>
+            <ScheduleComponent schedule={schedule} />
           ) : (
+            <p>Расписание отсутствует</p>
+          )}
+          {isAdmin && (
             <div>
-              <p>оно пустое братан</p>
+              <Button onClick={() => setShowTimePicker(true)}>Добавить</Button>
+              {showTimePicker && (
+                <TimePickerComponent onSelect={handleSelectDateTime} />
+              )}
+              <Button onClick={() => setShowDelete(true)}>Удалить</Button>
+              {showDelete && (
+                <DeleteSheduleComponent
+                  schedule={schedule}
+                  selectedSchedules={selectedSchedules}
+                  setSelectedSchedules={setSelectedSchedules}
+                  handleDeleteSchedules={handleDeleteSchedules}
+                />
+              )}
             </div>
           )}
-          {isAdmin ? (
-            <div>
-              <h2>Привет, админ</h2>
-              <p>Дополнительные функции для администратора</p>
-              <div>
-                <Button onClick={() => setShowTimePicker(true)}>
-                  Добавить
-                </Button>
-                {showTimePicker && (
-                  <TimePickerComponent onSelect={handleSelectDateTime} />
-                )}
-                <Button onClick={() => setShowDelete(true)}>удаление</Button>
-                {showDelete && (
-                  <DeleteSheduleComponent
-                    schedule={schedule}
-                    selectedSchedules={selectedSchedules}
-                    setSelectedSchedules={setSelectedSchedules}
-                    handleDeleteSchedules={handleDeleteSchedules}
-                  />
-                )}
-              </div>
-            </div>
-          ) : (
-            <div>
-              <h2>Привет, пользователь</h2>
-              <p>Добро пожаловать, обычный пользователь!</p>
-            </div>
-          )}
-        </div>
+        </>
       ) : (
-        <div>
-          <h1>Дождитесь подтверждения регистрации</h1>
-        </div>
+        <h1>Дождитесь подтверждения регистрации</h1>
       )}
     </div>
   );
