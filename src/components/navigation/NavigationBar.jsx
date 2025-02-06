@@ -23,11 +23,12 @@ const NavigationBar = () => {
         padding: "10px",
         borderTop: "1px solid #ccc",
         backgroundColor: "#fff",
+        marginBottom: "0px",
       }}
     >
       {navItems.map((item) => {
         // Определяем, активна ли текущая вкладка и начинается ли текущий путь с заданного значения
-        const isActive = location.pathname.startsWith(item.path);
+        const isActive = location.pathname(item.path);
 
         return (
           <Button
