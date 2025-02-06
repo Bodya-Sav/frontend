@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@telegram-apps/telegram-ui";
-import { ROUTES } from "../../navigation/Routes";
+import { ROUTES } from "../../navigation/routes";
 
 // Массив с описанием вкладок (страниц)
 const navItems = [
