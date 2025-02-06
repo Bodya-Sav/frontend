@@ -130,20 +130,21 @@
 
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@telegram-apps/telegram-ui";
 import { ROUTES } from "../../navigation/routes";
 import { AuthContext } from "../../context/AuthContext";
 
-import UsersIcon from "../../assets/icons/users.svg";
-import CalendarIcon from "../../assets/icons/calendar-date.svg";
+// Импортируем иконки из react-icons (можно выбрать из множества наборов)
+import { BiUser, BiCalendar } from "react-icons/bi";
 
-// Массив с описанием вкладок (страниц)
+// Массив с описанием вкладок
 const navItems = [
-  { id: "users", label: "Пользователи", path: ROUTES.USERS, icon: UsersIcon },
+  { id: "users", label: "Пользователи", path: ROUTES.USERS, icon: <BiUser /> },
   {
     id: "schedule",
     label: "Расписание",
     path: ROUTES.SHEDULE,
-    icon: CalendarIcon,
+    icon: <BiCalendar />,
   },
 ];
 
@@ -152,7 +153,7 @@ const NavigationBar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Флаг для определения открытия клавиатуры (на основе изменения высоты окна)
+  // Отслеживание изменения высоты экрана для определения открытия клавиатуры
   const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [initialHeight] = useState(window.innerHeight);
 
@@ -166,7 +167,6 @@ const NavigationBar = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [initialHeight]);
 
-  // Если клавиатура открыта, не отображаем панель
   if (keyboardOpen) return null;
 
   return (
@@ -186,35 +186,28 @@ const NavigationBar = () => {
     >
       {navItems.map((item) => {
         if (item.id === "users" && !isAdmin) return null;
-
         const isActive = location.pathname === item.path;
 
         return (
-          <button
+          <Button
             key={item.id}
             onClick={() => navigate(item.path)}
             style={{
               flex: 1,
-              background: "transparent",
+              backgroundColor: "transparent",
               border: "none",
-              padding: "10px",
+              padding: "5px",
+              borderRadius: "4px",
+              height: "40px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              fontSize: "24px",
+              color: isActive ? "#0088cc" : "#000000",
             }}
           >
-            <div
-              style={{
-                width: "24px",
-                height: "24px",
-                backgroundColor: isActive ? "#0088cc" : "#000",
-                mask: `url(${item.icon}) no-repeat center`,
-                WebkitMask: `url(${item.icon}) no-repeat center`,
-                maskSize: "contain",
-                WebkitMaskSize: "contain",
-              }}
-            />
-          </button>
+            {item.icon}
+          </Button>
         );
       })}
     </div>
