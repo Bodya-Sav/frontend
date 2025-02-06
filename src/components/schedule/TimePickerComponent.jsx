@@ -2,6 +2,8 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
+import { Button } from "@telegram-apps/telegram-ui";
+
 export default function TimePickerComponent({ onSelect }) {
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -36,9 +38,9 @@ export default function TimePickerComponent({ onSelect }) {
         timeFormat="HH:mm"
         timeIntervals={90}
       />
-      <button onClick={handleConfirm} style={{ margin: "0px 10px" }}>
+      <Button onClick={handleConfirm} style={{ margin: "0 10px" }}>
         Подтвердить
-      </button>
+      </Button>
     </div>
   );
 }
