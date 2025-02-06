@@ -5,6 +5,9 @@ import { ROUTES } from "../../navigation/routes";
 
 import { AuthContext } from "../../context/AuthContext";
 
+import UsersIcon from "../../assets/icons/users.svg";
+import Calendar from "../../assets/icons/calendar-date.svg";
+
 // Массив с описанием вкладок (страниц)
 const navItems = [
   { id: "users", label: "Пользователи", path: ROUTES.USERS },
@@ -80,12 +83,9 @@ const NavigationBar = () => {
             }}
           >
             {item.id === "users" ? (
-              <img src="../../assets/icons/users.svg" alt="Пользователи" />
+              <img src={UsersIcon} alt="Пользователи" />
             ) : (
-              <img
-                src="../../assets/icons/calendar-date.svg"
-                alt="Расписание"
-              />
+              <img src={Calendar} alt="Расписание" />
             )}
           </Button>
         );
