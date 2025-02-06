@@ -5,8 +5,11 @@ import { ROUTES } from "../../navigation/routes";
 
 import { AuthContext } from "../../context/AuthContext";
 
-import UsersIcon from "../../assets/icons/users.svg";
-import Calendar from "../../assets/icons/calendar-date.svg";
+// import UsersIcon from "../../assets/icons/users.svg";
+// import Calendar from "../../assets/icons/calendar-date.svg";
+
+import { ReactComponent as UsersIcon } from "../../assets/icons/users.svg";
+import { ReactComponent as Calendar } from "../../assets/icons/calendar-date.svg";
 
 // Массив с описанием вкладок (страниц)
 const navItems = [
