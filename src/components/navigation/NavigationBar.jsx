@@ -5,9 +5,8 @@ import { ROUTES } from "../../navigation/routes";
 
 import { AuthContext } from "../../context/AuthContext";
 
-import { ReactComponent as UsersIcon } from "../../assets/icons/users.svg";
-import { ReactComponent as CalendarIcon } from "../../assets/icons/calendar-date.svg";
-
+import UsersIcon from "../../assets/icons/users.svg?component";
+import CalendarIcon from "../../assets/icons/calendar-date.svg?component";
 // Массив с описанием вкладок (страниц)
 const navItems = [
   { id: "users", label: "Пользователи", path: ROUTES.USERS },
@@ -70,15 +69,6 @@ const NavigationBar = () => {
         // Определяем, активна ли текущая вкладка и начинается ли текущий путь с заданного значения
         const isActive = location.pathname === item.path;
 
-        // Определяем, какую иконку показать в зависимости от item.id
-        let IconComponent = null;
-        if (item.id === "users") {
-          IconComponent = UsersIcon;
-        } else if (item.id === "schedule") {
-          IconComponent = CalendarIcon;
-        }
-        // Если иконка не определена, можно вернуть null или текст
-
         return (
           <Button
             key={item.id}
@@ -91,7 +81,11 @@ const NavigationBar = () => {
               height: "40px",
             }}
           >
-            {IconComponent ? <IconComponent width="24" height="24" /> : null}
+            {item.id === "users" ? (
+              <UsersIcon width="24" height="24" />
+            ) : (
+              <CalendarIcon width="24" height="24" />
+            )}
           </Button>
         );
       })}
