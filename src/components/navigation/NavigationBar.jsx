@@ -5,11 +5,8 @@ import { ROUTES } from "../../navigation/routes";
 
 import { AuthContext } from "../../context/AuthContext";
 
-// import UsersIcon from "../../assets/icons/users.svg";
-// import Calendar from "../../assets/icons/calendar-date.svg";
-
-import { ReactComponent as UsersIcon } from "../../assets/icons/users.svg";
-import { ReactComponent as Calendar } from "../../assets/icons/calendar-date.svg";
+import UsersIcon from "../../assets/icons/users.svg";
+import Calendar from "../../assets/icons/calendar-date.svg";
 
 // Массив с описанием вкладок (страниц)
 const navItems = [
@@ -68,35 +65,61 @@ const NavigationBar = () => {
         const isActive = location.pathname === item.path;
 
         return (
-          <Button
-            key={item.id}
-            onClick={() => navigate(item.path)}
+          <div
             style={{
-              flex: 1, // каждая вкладка занимает равное пространство
-              backgroundColor: "transparent",
-              border: "none",
-              padding: "5px",
-              borderRadius: "4px",
-              height: "40px",
+              position: "fixed", // фиксированное позиционирование
+              bottom: 0, // прижато к нижней части экрана
+              left: 0,
+              width: "100%", // занимает всю ширину
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "space-around",
+              padding: "10px",
+              borderTop: "1px solid #ccc",
+              backgroundColor: "#fff",
+              zIndex: 1000,
             }}
           >
-            {item.id === "users" ? (
-              <UsersIcon
-                width="24px"
-                height="24px"
-                fill={isActive ? "#0088cc" : "#000000"}
-              />
-            ) : (
-              <Calendar
-                width="24px"
-                height="24px"
-                fill={isActive ? "#0088cc" : "#000000"}
-              />
-            )}
-          </Button>
+            {navItems.map((item) => {
+              // Если элемент с id "users" и пользователь не админ, не рендерим кнопку
+              if (item.id === "users" && !isAdmin) {
+                return null;
+              }
+              const isActive = location.pathname === item.path;
+              // Выбираем URL иконки
+              const iconUrl = item.id === "users" ? UsersIcon : Calendar;
+
+              return (
+                <Button
+                  key={item.id}
+                  onClick={() => navigate(item.path)}
+                  style={{
+                    flex: 1, // равное распределение пространства
+                    backgroundColor: "transparent",
+                    border: "none",
+                    padding: "5px",
+                    borderRadius: "4px",
+                    height: "40px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "24px",
+                      height: "24px",
+                      backgroundColor: isActive ? "#0088cc" : "#000000",
+                      // Используем CSS-маску, чтобы отобразить внешний вид иконки
+                      mask: `url(${iconUrl}) no-repeat center`,
+                      WebkitMask: `url(${iconUrl}) no-repeat center`,
+                      maskSize: "contain",
+                      WebkitMaskSize: "contain",
+                    }}
+                  />
+                </Button>
+              );
+            })}
+          </div>
         );
       })}
     </div>
