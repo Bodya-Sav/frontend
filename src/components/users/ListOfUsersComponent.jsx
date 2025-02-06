@@ -17,9 +17,10 @@ const ListOfUsersComponent = ({ users }) => {
           return (
             <li key={id}>
               <strong>фио:</strong> {fio} <br />
-              <strong>наличие админки:</strong> {isadmin} <br />
-              <strong>авторизован:</strong> {isauth} <br />
-              <strong>поммечен удаленным:</strong> {isdeleted}
+              <strong>наличие админки:</strong> {isadmin ? "Да" : "Нет"} <br />
+              <strong>авторизован:</strong> {isauth ? "Да" : "Нет"} <br />
+              <strong>помечен удаленным:</strong> {isdeleted ? "Да" : "Нет"}
+              <br />
             </li>
           );
         })}
