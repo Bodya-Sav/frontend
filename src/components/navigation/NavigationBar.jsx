@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@telegram-apps/telegram-ui";
 import { ROUTES } from "../../navigation/routes";
 
+import { AuthContext } from "../../context/AuthContext";
+
 // Массив с описанием вкладок (страниц)
 const navItems = [
   { id: "schedule", label: "Расписание", path: ROUTES.SHEDULE },
@@ -12,6 +14,7 @@ const navItems = [
 ];
 
 const NavigationBar = () => {
+  const { isAdmin, isAuth } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -57,6 +60,10 @@ const NavigationBar = () => {
       }}
     >
       {navItems.map((item) => {
+        // Если элемент с id "users" и пользователь не является админом — не рендерим кнопку
+        if (item.id === "users" && !isAdmin) {
+          return null;
+        }
         // Определяем, активна ли текущая вкладка и начинается ли текущий путь с заданного значения
         const isActive = location.pathname === item.path;
 
