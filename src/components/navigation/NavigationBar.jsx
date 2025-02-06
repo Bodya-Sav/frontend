@@ -210,7 +210,7 @@ const NavigationBar = () => {
               justifyContent: "center",
             }}
           >
-            <svg
+            <div
               width="30px"
               height="30px"
               style={{
