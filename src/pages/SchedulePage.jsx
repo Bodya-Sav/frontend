@@ -67,6 +67,7 @@ export default function SchedulePage() {
         flexDirection: "column",
         alignItems: "center",
         justifyItems: "center",
+        height: "auto",
       }}
     >
       {schedule ? (
