@@ -4,7 +4,6 @@ import { AppRoot } from "@telegram-apps/telegram-ui";
 import AppRoutes from "./navigation/Routes";
 import NavigationBar from "./components/navigation/NavigationBar";
 import { checkAuth } from "./services/AuthService";
-import { AuthProvider } from "./context/AuthContext";
 
 import { AuthContext } from "./context/AuthContext";
 
@@ -43,19 +42,17 @@ function App() {
 
   return (
     <>
-      <AuthProvider>
-        <AppRoot>
-          {isAuth ? (
-            <>
-              <AppRoutes />
+      <AppRoot>
+        {isAuth ? (
+          <>
+            <AppRoutes />
 
-              <NavigationBar />
-            </>
-          ) : (
-            <h1>Дождитесь подтверждения регистрации</h1>
-          )}
-        </AppRoot>
-      </AuthProvider>
+            <NavigationBar />
+          </>
+        ) : (
+          <h1>Дождитесь подтверждения регистрации</h1>
+        )}
+      </AppRoot>
     </>
   );
 }
