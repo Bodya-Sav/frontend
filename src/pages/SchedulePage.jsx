@@ -42,7 +42,7 @@ export default function SchedulePage() {
       if (selectedSchedules.length === 0) return;
       await deleteSchedule(selectedSchedules);
       setSelectedSchedules([]);
-      setShowDelete(false);
+      setDeleteMode(false);
       const updatedSchedule = await getAllSchedule();
       setSchedule(updatedSchedule);
     } catch (error) {
