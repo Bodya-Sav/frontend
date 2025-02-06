@@ -1,6 +1,6 @@
 const ListOfUsersComponent = ({ users }) => {
   if (!users || !users.result || users.result.length === 0) {
-    return <div>Нет доступных пользователей</div>;
+    return <div>Загрузка пользователей</div>;
   }
 
   return (
@@ -15,12 +15,11 @@ const ListOfUsersComponent = ({ users }) => {
       <ul>
         {users.result.map(({ id, fio, isadmin, isauth, isdeleted }) => {
           return (
-            <li key={id}>
+            <li key={id} style={{ marginBottom: "1em" }}>
               <strong>фио:</strong> {fio} <br />
               <strong>наличие админки:</strong> {isadmin ? "Да" : "Нет"} <br />
               <strong>авторизован:</strong> {isauth ? "Да" : "Нет"} <br />
               <strong>помечен удаленным:</strong> {isdeleted ? "Да" : "Нет"}
-              <br />
             </li>
           );
         })}

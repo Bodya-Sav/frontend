@@ -53,7 +53,14 @@ export default function SchedulePage() {
   }, []);
 
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyItems: "center",
+      }}
+    >
       {schedule ? (
         <ScheduleComponent schedule={schedule} />
       ) : (

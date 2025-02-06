@@ -7,8 +7,8 @@ import { AuthContext } from "../../context/AuthContext";
 
 // Массив с описанием вкладок (страниц)
 const navItems = [
-  { id: "schedule", label: "Расписание", path: ROUTES.SHEDULE },
   { id: "users", label: "Пользователи", path: ROUTES.USERS },
+  { id: "schedule", label: "Расписание", path: ROUTES.SHEDULE },
   // В будущем можно добавить другие страницы, например:
   // { id: 'profile', label: 'Профиль', path: ROUTES.PROFILE },
 ];
