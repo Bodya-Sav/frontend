@@ -11,7 +11,7 @@ import {
   deleteSchedule,
 } from "../services/ScheduleService";
 
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 
 export default function SchedulePage() {
   const { isAdmin } = useContext(AuthContext);
