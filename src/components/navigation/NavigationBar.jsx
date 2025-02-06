@@ -18,12 +18,16 @@ const NavigationBar = () => {
   return (
     <div
       style={{
+        position: "fixed", // фиксированное позиционирование
+        bottom: 0, // прижато к нижней части экрана
+        left: 0, // прижато к левому краю
+        width: "100%", // занимает всю ширину экрана
         display: "flex",
         justifyContent: "space-around",
         padding: "10px",
         borderTop: "1px solid #ccc",
         backgroundColor: "#fff",
-        marginBottom: "0px",
+        zIndex: 1000, // чтобы панель была поверх прочего контента
       }}
     >
       {navItems.map((item) => {
