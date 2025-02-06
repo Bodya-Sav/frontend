@@ -6,12 +6,13 @@ import NavigationBar from "./components/navigation/NavigationBar";
 import { checkAuth } from "./services/AuthService";
 import { AuthProvider } from "./context/AuthContext";
 
+import { AuthContext } from "./context/AuthContext";
+
 const webapp = window.Telegram.WebApp;
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [isAuth, setIsAuth] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const { setIsAuth, isAuth, setIsAdmin } = useContext(AuthContext);
 
   useEffect(() => {
     webapp.ready();
