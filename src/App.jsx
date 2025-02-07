@@ -18,8 +18,8 @@ function App() {
     const chat_id = webapp.initDataUnsafe.user.id;
     checkAuth(chat_id)
       .then((data) => {
-        setIsAdmin(data.result.isadmin);
-        setIsAuth(data.result.isauth);
+        setIsAdmin(data.result.isAdmin);
+        setIsAuth(data.result.isAuth);
         setLoading(false);
       })
       .catch((error) => console.error("Ошибка авторизации:", error));
