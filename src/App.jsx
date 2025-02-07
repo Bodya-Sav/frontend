@@ -11,12 +11,11 @@ const webapp = window.Telegram.WebApp;
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { setIsAuth, isauth, setIsAdmin, setChatId } = useContext(AuthContext);
+  const { setIsAuth, isauth, setIsAdmin } = useContext(AuthContext);
 
   useEffect(() => {
     webapp.ready();
     const chat_id = webapp.initDataUnsafe.user.id;
-    setChatId(chat_id);
     checkAuth(chat_id)
       .then((data) => {
         setIsAdmin(data.result.isAdmin);
