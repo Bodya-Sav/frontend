@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 import { updateUserInfo, getAllUsers } from "../../services/UserService";
 
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
 
 const UserEditor = ({ users, onCancel, onUpdate }) => {
   const [selectedUser, setSelectedUser] = useState(null);
