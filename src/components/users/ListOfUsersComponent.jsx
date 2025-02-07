@@ -13,13 +13,13 @@ const ListOfUsersComponent = ({ users }) => {
     >
       <h2>Пользователи</h2>
       <ul>
-        {users.result.map(({ id, fio, isadmin, isauth, isdeleted }) => {
+        {users.result.map(({ id, fio, isAdmin, isAuth, isDeleted }) => {
           return (
             <li key={id} style={{ marginBottom: "1em" }}>
               <strong>фио:</strong> {fio} <br />
-              <strong>наличие админки:</strong> {isadmin ? "Да" : "Нет"} <br />
-              <strong>авторизован:</strong> {isauth ? "Да" : "Нет"} <br />
-              <strong>помечен удаленным:</strong> {isdeleted ? "Да" : "Нет"}
+              <strong>наличие админки:</strong> {isAdmin ? "Да" : "Нет"} <br />
+              <strong>авторизован:</strong> {isAuth ? "Да" : "Нет"} <br />
+              <strong>помечен удаленным:</strong> {isDeleted ? "Да" : "Нет"}
             </li>
           );
         })}
