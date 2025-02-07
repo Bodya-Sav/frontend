@@ -14,8 +14,8 @@ export default function TimePickerComponent({ onSelect }) {
     }
 
     const data = {
-      date: selectedDate.toISOString().split("T")[0].replace(/-/g, "."), //временно используем . вместо - в формате даты
-      // date: selectedDate.toISOString().split("T")[0], // YYYY-MM-DD
+      // date: selectedDate.toISOString().split("T")[0].replace(/-/g, "."), //временно используем . вместо - в формате даты
+      date: selectedDate.toISOString().split("T")[0], // YYYY-MM-DD
       time: selectedDate.toTimeString().split(" ")[0], // HH:MM:SS
     };
 
