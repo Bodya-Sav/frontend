@@ -1,5 +1,7 @@
 import { fetchWrapper } from "./FetchWrapper";
 
 export const getAllUsers = async () => {
-  return fetchWrapper("/get_all_user", "GET");
+  const data = fetchWrapper("/get_all_user", "GET");
+  console.log(data.result);
+  return res;
 };
