@@ -35,7 +35,7 @@ const ScheduleComponent = ({
       <ul style={{ listStyle: "none", padding: 0 }}>
         {schedule.result.map((item) => {
           // Форматируем дату (если поле с датой называется data)
-          const formattedDate = new Date(item.data).toLocaleDateString(
+          const formattedDate = new Date(item.date).toLocaleDateString(
             "ru-RU",
             {
               day: "2-digit",
