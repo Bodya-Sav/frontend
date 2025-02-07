@@ -11,7 +11,7 @@ const webapp = window.Telegram.WebApp;
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { setIsAuth, isAuth, setIsAdmin } = useContext(AuthContext);
+  const { setIsAuth, isauth, setIsAdmin } = useContext(AuthContext);
 
   useEffect(() => {
     webapp.ready();
@@ -43,7 +43,7 @@ function App() {
   return (
     <>
       <AppRoot>
-        {isAuth ? (
+        {isauth ? (
           <>
             <AppRoutes />
 
