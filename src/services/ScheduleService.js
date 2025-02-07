@@ -21,7 +21,7 @@ export const deleteSchedule = async (selectedSchedules) => {
   console.log("запрос удаления расписания");
 
   const body = JSON.stringify({ id: selectedSchedules });
-  const res = fetchWrapper("/delete_schedule", "POST", body);
+  const res = await fetchWrapper("/delete_schedule", "POST", body);
   console.log(res.result);
   return res;
 };
