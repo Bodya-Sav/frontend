@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 import { updateUserInfo, getAllUsers } from "../../services/UserService";
+
+import { AuthContext } from "../context/AuthContext";
 
 const UserEditor = ({ users, onCancel, onUpdate }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [editedUser, setEditedUser] = useState(null);
+
+  const { chatid } = useContext(AuthContext);
 
   // Обработчик выбора пользователя для редактирования
   const handleUserSelect = (user) => {
@@ -24,12 +28,10 @@ const UserEditor = ({ users, onCancel, onUpdate }) => {
 
   // Обработчик подтверждения изменений
   const handleConfirm = async () => {
-    const chat_id = window.Telegram.WebApp.webapp.initDataUnsafe.user.id;
-
     try {
       // Если какое-то поле не изменено, в editedUser оно уже содержит исходное значение
       await updateUserInfo(
-        chat_id, // предполагается, что chat_id присутствует в данных
+        chatid, // предполагается, что chat_id присутствует в данных
         editedUser.fio,
         editedUser.isAdmin,
         editedUser.isAuth,
