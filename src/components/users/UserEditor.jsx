@@ -24,10 +24,12 @@ const UserEditor = ({ users, onCancel, onUpdate }) => {
 
   // Обработчик подтверждения изменений
   const handleConfirm = async () => {
+    const chat_id = window.Telegram.WebApp.webapp.initDataUnsafe.user.id;
+
     try {
       // Если какое-то поле не изменено, в editedUser оно уже содержит исходное значение
       await updateUserInfo(
-        selectedUser.chat_id, // предполагается, что chat_id присутствует в данных
+        chat_id, // предполагается, что chat_id присутствует в данных
         editedUser.fio,
         editedUser.isAdmin,
         editedUser.isAuth,
