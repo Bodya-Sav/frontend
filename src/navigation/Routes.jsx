@@ -13,7 +13,7 @@ const AppRoutes = () => (
     <Route index element={<CoursesPage />} />
 
     <Route path={ROUTES.USERS} element={<UsersPage />} />
-    <Route path={ROUTES.SHEDULE} element={<SchedulePage />} />
+    <Route path={ROUTES.SСHEDULE} element={<SchedulePage />} />
     <Route path={ROUTES.SURVEYS} element={<SyrveysPage />} />
     <Route path={ROUTES.PROGRESS} element={<ProgressPage />} />
   </Routes>
