@@ -19,7 +19,7 @@ const navItems = [
 ];
 
 const NavigationBar = () => {
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin, isSuper } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -55,7 +55,13 @@ const NavigationBar = () => {
       }}
     >
       {navItems.map((item) => {
+        //ограничиваем вкладки для категорий пользователей (super/admin/user)
+
+        //убираем вклюдку users для user
         if (item.id === "users" && !isAdmin) return null;
+        //убираем вкладку schedule для supervisor
+        if (item.id === "schedule" && isSuper) return null;
+
         const isActive = location.pathname === item.path;
 
         return (
