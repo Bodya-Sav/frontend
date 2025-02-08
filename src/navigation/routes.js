@@ -1,4 +1,7 @@
 export const ROUTES = {
-  SHEDULE: "/",
+  COURSES: "/",
   USERS: "/users",
+  SHEDULE: "/schedule",
+  SURVEYS: "/syrveys",
+  PROGRESS: "/progress",
 };

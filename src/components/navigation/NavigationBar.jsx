@@ -1,29 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@telegram-apps/telegram-ui";
-import { ROUTES } from "../../navigation/routes";
 import { AuthContext } from "../../context/AuthContext";
 
-// Импортируем иконки из react-icons (можно выбрать из множества наборов)
-import { BiUser, BiCalendar } from "react-icons/bi";
-
-// Массив с описанием вкладок
-const navItems = [
-  { id: "users", label: "Пользователи", path: ROUTES.USERS, icon: <BiUser /> },
-  {
-    id: "schedule",
-    label: "Расписание",
-    path: ROUTES.SHEDULE,
-    icon: <BiCalendar />,
-  },
-];
+import { navItems } from "./navItems";
 
 const NavigationBar = () => {
-  const { isAdmin, isSuper } = useContext(AuthContext);
+  const { isSuper, isAdmin } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Отслеживание изменения высоты экрана для определения открытия клавиатуры
+  // Определяем роль пользователя: если isSuper, то "super", если isAdmin, то "admin", иначе "user"
+  const role = isSuper ? "super" : isAdmin ? "admin" : "user";
+
+  // Отфильтровываем элементы, доступные для данной роли
+  const filteredNavItems = navItems.filter((item) => item.roles.includes(role));
+
+  // Отслеживание изменения высоты окна для определения открытия клавиатуры
   const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [initialHeight] = useState(window.innerHeight);
 
@@ -42,10 +35,10 @@ const NavigationBar = () => {
   return (
     <div
       style={{
-        position: "fixed",
-        bottom: 0,
+        position: "fixed", // фиксированное позиционирование
+        bottom: 0, // прижато к нижней части экрана
         left: 0,
-        width: "100%",
+        width: "100%", // занимает всю ширину экрана
         display: "flex",
         justifyContent: "space-around",
         padding: "10px",
@@ -54,22 +47,14 @@ const NavigationBar = () => {
         zIndex: 1000,
       }}
     >
-      {navItems.map((item) => {
-        //ограничиваем вкладки для категорий пользователей (super/admin/user)
-
-        //убираем вклюдку users для user
-        if (item.id === "users" && !isAdmin) return null;
-        //убираем вкладку schedule для supervisor
-        if (item.id === "schedule" && isSuper) return null;
-
+      {filteredNavItems.map((item) => {
         const isActive = location.pathname === item.path;
-
         return (
           <Button
             key={item.id}
             onClick={() => navigate(item.path)}
             style={{
-              flex: 1,
+              flex: 1, // равное распределение пространства
               backgroundColor: "transparent",
               border: "none",
               padding: "5px",
@@ -78,7 +63,7 @@ const NavigationBar = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "44px",
+              fontSize: "24px",
               color: isActive ? "#0088cc" : "#000000",
             }}
           >
