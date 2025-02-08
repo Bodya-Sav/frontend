@@ -63,7 +63,7 @@ const NavigationBar = () => {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "24px",
+              fontSize: "44px",
               color: isActive ? "#0088cc" : "#000000",
             }}
           >

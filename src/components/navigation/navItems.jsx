@@ -19,7 +19,7 @@ export const navItems = [
   {
     id: "schedule",
     label: "Расписание",
-    path: ROUTES.SCHEDULE, // убедитесь, что ROUTES.SCHEDULE определён
+    path: ROUTES.SСHEDULE, // убедитесь, что ROUTES.SCHEDULE определён
     icon: <BiCalendar />,
     roles: ["admin", "user"], // доступны админам и обычным пользователям
   },
