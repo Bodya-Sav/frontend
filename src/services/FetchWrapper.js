@@ -16,7 +16,7 @@ export const fetchWrapper = async (endpoint, method = "GET", body = null) => {
     const response = await fetch(`${API_URL}${endpoint}`, options);
 
     if (!response.ok) {
-      throw new Error(`Ошибка сети: ${response.status}`);
+      throw new Error(`Ошибка сети: ${response.json().message}`);
     }
 
     return await response.json();
