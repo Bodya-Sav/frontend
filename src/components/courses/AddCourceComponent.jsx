@@ -14,7 +14,7 @@ export default function AddCourceComponent() {
       return;
     }
     try {
-      const res = await addCource({ courseName, user_id });
+      const res = await addCource({ user_id, courseName });
       console.log("Курс успешно добавлен:", res);
       // можно очистить инпут после успешного запроса
       setCourseName("");
