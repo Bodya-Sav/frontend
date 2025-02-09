@@ -16,10 +16,13 @@ export const fetchWrapper = async (endpoint, method = "GET", body = null) => {
     const response = await fetch(`${API_URL}${endpoint}`, options);
 
     if (!response.ok) {
-      throw new Error(`Ошибка сети: ${response.status}`);
+      // Если сервер возвращает подробную информацию об ошибке, передаем её
+      throw new Error(data.message || `Ошибка сети: ${response.status}`);
     }
 
-    return await response.json();
+    if (response.success) {
+      return await response.json();
+    } else console.log("ошибка ответа сервера: ", response.message);
   } catch (error) {
     console.error(`Ошибка при запросе ${endpoint}:`, error);
     throw error;
