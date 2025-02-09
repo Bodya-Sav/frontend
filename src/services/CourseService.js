@@ -9,3 +9,11 @@ export const addCource = async ({ id, title }) => {
   console.log("Результат запроса:", res.result);
   return res;
 };
+
+export const getAllCourses = async () => {
+  console.log("запрос получения всех курсов");
+
+  const res = await fetchWrapper("/get_all_courses", "GET");
+  console.log(res.result);
+  return res;
+};
