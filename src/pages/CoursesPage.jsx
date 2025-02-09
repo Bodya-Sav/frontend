@@ -20,7 +20,7 @@ export default function CoursesPage() {
         }}
       >
         <h2>Страница с курсами</h2>
-        <AddCourceComponent />
+        {isAdmin ? <AddCourceComponent /> : <h2>Вы не админ</h2>}
       </div>
     </>
   );

@@ -34,25 +34,19 @@ export default function AddCourceComponent() {
       }}
     >
       <h3>Добавление курса</h3>
-      {isAdmin ? (
-        <>
-          <input
-            type="text"
-            placeholder="Название курса"
-            value={courseName}
-            onChange={(e) => setCourseName(e.target.value)}
-            style={{
-              marginBottom: "10px",
-              padding: "5px",
-              width: "250px",
-              fontSize: "16px",
-            }}
-          />
-          <Button onClick={handleCreateCourse}>Создать курс</Button>
-        </>
-      ) : (
-        <h2>Вы не админ</h2>
-      )}
+      <input
+        type="text"
+        placeholder="Название курса"
+        value={courseName}
+        onChange={(e) => setCourseName(e.target.value)}
+        style={{
+          marginBottom: "10px",
+          padding: "5px",
+          width: "250px",
+          fontSize: "16px",
+        }}
+      />
+      <Button onClick={handleCreateCourse}>Создать курс</Button>
     </div>
   );
 }
