@@ -19,9 +19,7 @@ export const fetchWrapper = async (endpoint, method = "GET", body = null) => {
 
     if (!response.ok) {
       // Используем сообщение об ошибке, пришедшее с сервера
-      console.log(data.message || `Ошибка сети: ${response.status}`);
-
-      //throw new Error;
+      throw new Error(data.message || `Ошибка сети: ${response.status}`);
     }
 
     return data;
