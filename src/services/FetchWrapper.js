@@ -17,11 +17,11 @@ export const fetchWrapper = async (endpoint, method = "GET", body = null) => {
 
     if (!response.ok) {
       // Если сервер возвращает подробную информацию об ошибке, передаем её
-      throw new Error(data.message || `Ошибка сети: ${response.status}`);
+      throw new Error(response.message || `Ошибка сети: ${response.status}`);
     }
 
     if (response.status == 501) {
-      throw new Error(data.message || `Ошибка сети: ${response.status}`);
+      throw new Error(response.message || `Ошибка сети: ${response.status}`);
     }
 
     return await response.json();
