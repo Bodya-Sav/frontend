@@ -25,7 +25,7 @@ function App() {
         setId(data.result.id);
         setLoading(false);
       })
-      .catch((error) => console.error("Ошибка авторизации:", data.message));
+      .catch((error = console.error("Ошибка авторизации:", error)));
   }, []);
 
   if (loading) {
