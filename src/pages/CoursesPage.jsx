@@ -20,6 +20,7 @@ export default function CoursesPage() {
         }}
       >
         <h2>Страница с курсами</h2>
+        <AddCourceComponent />
       </div>
     </>
   );
