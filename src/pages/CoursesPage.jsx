@@ -20,7 +20,11 @@ export default function CoursesPage() {
         }}
       >
         <h2>Страница с курсами</h2>
-        {isAdmin ? <AddCourceComponent /> : <h2>Вы не админ</h2>}
+        {isAdmin && !user_id === 1 ? (
+          <AddCourceComponent />
+        ) : (
+          <h2>Вы не админ</h2>
+        )}
       </div>
     </>
   );
