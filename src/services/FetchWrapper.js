@@ -10,21 +10,21 @@ export const fetchWrapper = async (endpoint, method = "GET", body = null) => {
     };
 
     if (body) {
-      options.body = body;
+      // Преобразуем тело запроса в JSON-строку
+      options.body = JSON.stringify(body);
     }
 
     const response = await fetch(`${API_URL}${endpoint}`, options);
+    const data = await response.json();
 
     if (!response.ok) {
-      // Если сервер возвращает подробную информацию об ошибке, передаем её
-      throw new Error(response.message || `Ошибка сети: ${response.status}`);
+      // Используем сообщение об ошибке, пришедшее с сервера
+      console.log(data.message || `Ошибка сети: ${response.status}`);
+
+      //throw new Error;
     }
 
-    if (response.status == 501) {
-      throw new Error(response.message || `Ошибка сети: ${response.status}`);
-    }
-
-    return await response.json();
+    return data;
   } catch (error) {
     console.error(`Ошибка при запросе ${endpoint}:`, error);
     throw error;
