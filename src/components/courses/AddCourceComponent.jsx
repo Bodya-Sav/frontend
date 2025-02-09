@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 
-import { AuthContext, getAllCourses } from "../../context/AuthContext";
-import { addCource } from "../../services/CourseService";
+import { AuthContext } from "../../context/AuthContext";
+import { addCource, getAllCourses } from "../../services/CourseService";
 
 export default function AddCourceComponent() {
   const { isSuper, isAdmin, user_id } = useContext(AuthContext);
