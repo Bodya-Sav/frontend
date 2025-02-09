@@ -4,7 +4,7 @@ import { Button } from "@telegram-apps/telegram-ui";
 import { AuthContext } from "../../context/AuthContext";
 import { addCource, getAllCourses } from "../../services/CourseService";
 
-export default function AddCourceComponent() {
+export default function AddCourceComponent({ setCourses }) {
   const { isSuper, isAdmin, user_id } = useContext(AuthContext);
   const [courseName, setCourseName] = useState("");
 
