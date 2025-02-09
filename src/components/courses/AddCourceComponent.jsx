@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext, getAllCourses } from "../../context/AuthContext";
 import { addCource } from "../../services/CourseService";
 
 export default function AddCourceComponent() {
@@ -18,6 +18,12 @@ export default function AddCourceComponent() {
       console.log("Курс успешно добавлен:", res);
       // можно очистить инпут после успешного запроса
       setCourseName("");
+
+      getAllCourses()
+        .then(setCourses)
+        .catch((error) =>
+          console.error("Ошибка загрузки пользователей:", error)
+        );
     } catch (error) {
       console.error("Ошибка при добавлении курса:", error);
     }
