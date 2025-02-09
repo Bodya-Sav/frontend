@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 
+import AddCourceComponent from "../components/courses/AddCourceComponent";
+
+import { AuthContext } from "../context/AuthContext";
+
 export default function CoursesPage() {
+  const { isSuper, isAdmin, user_id } = useContext(AuthContext);
+
   return (
     <>
       <div

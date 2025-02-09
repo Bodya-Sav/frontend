@@ -11,7 +11,8 @@ const webapp = window.Telegram.WebApp;
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { setIsAuth, isauth, setIsAdmin, setIsSuper } = useContext(AuthContext);
+  const { setIsAuth, isauth, setIsAdmin, setIsSuper, setId } =
+    useContext(AuthContext);
 
   useEffect(() => {
     webapp.ready();
@@ -21,6 +22,7 @@ function App() {
         if (data.result.id === 1) setIsSuper(true);
         setIsAdmin(data.result.isAdmin);
         setIsAuth(data.result.isAuth);
+        setId(data.result.id);
         setLoading(false);
       })
       .catch((error) => console.error("Ошибка авторизации:", error));
