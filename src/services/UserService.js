@@ -8,17 +8,11 @@ export const getAllUsers = async () => {
   return res;
 };
 
-export const updateUserInfo = async (
-  chat_id,
-  fio,
-  isAdmin,
-  isAuth,
-  isDeleted
-) => {
+export const updateUserInfo = async (id, fio, isAdmin, isAuth, isDeleted) => {
   console.log("запрос обновления информации о пользователе");
 
   const body = JSON.stringify({
-    chat_id,
+    id,
     fio,
     isAdmin,
     isAuth,
