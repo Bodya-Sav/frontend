@@ -30,7 +30,7 @@ const UserEditor = ({ users, onCancel, onUpdate }) => {
     try {
       // Если какое-то поле не изменено, в editedUser оно уже содержит исходное значение
       await updateUserInfo(
-        editedUser.chat_id, // предполагается, что chat_id присутствует в данных
+        editedUser.id, // предполагается, что chat_id присутствует в данных
         editedUser.fio,
         editedUser.isAdmin,
         editedUser.isAuth,
