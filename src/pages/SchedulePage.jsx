@@ -120,6 +120,7 @@ export default function SchedulePage() {
 
     // Добавляем к данным расписания поле course_id из выбранного курса
     const scheduleData = { ...data, course_id: selectedCourse.id };
+    console.log(scheduleData);
 
     setSelectedDateTime(data);
     try {
