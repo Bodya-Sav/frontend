@@ -1,8 +1,20 @@
 import React, { useState, useContext } from "react";
 import { CourseContext } from "../../context/CourseContext";
+import { useLocation } from "react-router-dom";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
+import { ROUTES } from "../../navigation/routes"; // если у вас определён ROUTES.COURSES
 
 const TopPanelComponent = () => {
+  const location = useLocation();
+
+  // Если на странице курсов (или другом нужном маршруте), не рендерим шапку
+  if (
+    location.pathname === ROUTES.COURSES ||
+    location.pathname === "/courses"
+  ) {
+    return null;
+  }
+
   const { selectedCourse, setSelectedCourse, courseList } =
     useContext(CourseContext);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
