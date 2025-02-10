@@ -3,6 +3,8 @@ import { AppRoot } from "@telegram-apps/telegram-ui";
 
 import AppRoutes from "./navigation/Routes";
 import NavigationBar from "./components/navigation/NavigationBar";
+import TopPanelComponent from "./components/top_panel/TopPanelComponent";
+
 import { checkAuth } from "./services/AuthService";
 
 import { AuthContext } from "./context/AuthContext";
@@ -48,6 +50,9 @@ function App() {
       <AppRoot>
         {isauth ? (
           <>
+            <TopPanelComponent />
+            {/* Добавляем отступ сверху, чтобы контент не скрывался под шапкой */}
+            <div style={{ paddingTop: "70px" }}></div>
             <AppRoutes />
 
             <NavigationBar />
