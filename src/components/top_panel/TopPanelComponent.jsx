@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { CourseContext } from "../context/CourseContext";
+import { CourseContext } from "../../context/CourseContext";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 
 const TopPanelComponent = () => {
