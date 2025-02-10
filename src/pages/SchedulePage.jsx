@@ -16,20 +16,28 @@ import { CourseContext } from "../context/CourseContext";
 
 // export default function SchedulePage() {
 //   const { isAdmin } = useContext(AuthContext);
+//   const { selectedCourse } = useContext(CourseContext); // Получаем выбранный курс
 
 //   const [schedule, setSchedule] = useState(null);
-//   // Режим добавления – аналог deleteMode
 //   const [addMode, setAddMode] = useState(false);
-//   // Флаг, отвечающий за включение/выключение режима удаления (показываются чекбоксы)
 //   const [deleteMode, setDeleteMode] = useState(false);
 //   const [selectedDateTime, setSelectedDateTime] = useState(null);
 //   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
 //   const handleSelectDateTime = async (data) => {
+//     // Проверяем, выбран ли курс
+//     if (!selectedCourse) {
+//       console.error("Курс не выбран. Не удалось добавить расписание.");
+//       return;
+//     }
+
+//     // Добавляем к данным расписания поле course_id из выбранного курса
+//     const scheduleData = { ...data, course_id: selectedCourse.id };
+//     console.log(JSON.stringify(scheduleData));
+
 //     setSelectedDateTime(data);
 //     try {
-//       await addFreeSchedule(data);
-//       // Закрываем режим добавления после успешного добавления
+//       await addFreeSchedule(scheduleData);
 //       setAddMode(false);
 //       const updatedSchedule = await getAllSchedule();
 //       setSchedule(updatedSchedule);
@@ -49,10 +57,6 @@ import { CourseContext } from "../context/CourseContext";
 //     } catch (error) {
 //       console.error("Ошибка при удалении расписания:", error);
 //     }
-
-//     getAllSchedule()
-//       .then(setSchedule)
-//       .catch((error) => console.error("Ошибка загрузки расписания:", error));
 //   };
 
 //   useEffect(() => {
@@ -111,23 +115,45 @@ export default function SchedulePage() {
   const [selectedDateTime, setSelectedDateTime] = useState(null);
   const [selectedSchedules, setSelectedSchedules] = useState([]);
 
+  // Функция для загрузки расписания и фильтрации по выбранному курсу
+  const fetchFilteredSchedule = async () => {
+    try {
+      const data = await getAllSchedule();
+      if (selectedCourse) {
+        // Предполагается, что каждое расписание имеет поле course_id
+        const filtered = data.result.filter(
+          (item) => item.course_id === selectedCourse.id
+        );
+        setSchedule({ ...data, result: filtered });
+      } else {
+        // Если курс не выбран, можно либо ничего не показывать, либо показывать всё
+        setSchedule(data);
+      }
+    } catch (error) {
+      console.error("Ошибка загрузки расписания:", error);
+    }
+  };
+
+  // Перезагружаем расписание при монтировании и когда выбранный курс изменяется
+  useEffect(() => {
+    fetchFilteredSchedule();
+  }, [selectedCourse]);
+
   const handleSelectDateTime = async (data) => {
-    // Проверяем, выбран ли курс
     if (!selectedCourse) {
       console.error("Курс не выбран. Не удалось добавить расписание.");
       return;
     }
 
-    // Добавляем к данным расписания поле course_id из выбранного курса
+    // Добавляем поле course_id к данным расписания
     const scheduleData = { ...data, course_id: selectedCourse.id };
-    console.log(JSON.stringify(scheduleData));
+    console.log("Отправляем данные:", JSON.stringify(scheduleData));
 
     setSelectedDateTime(data);
     try {
       await addFreeSchedule(scheduleData);
       setAddMode(false);
-      const updatedSchedule = await getAllSchedule();
-      setSchedule(updatedSchedule);
+      fetchFilteredSchedule();
     } catch (error) {
       console.error("Ошибка при добавлении расписания:", error);
     }
@@ -139,18 +165,11 @@ export default function SchedulePage() {
       await deleteSchedule(selectedSchedules);
       setSelectedSchedules([]);
       setDeleteMode(false);
-      const updatedSchedule = await getAllSchedule();
-      setSchedule(updatedSchedule);
+      fetchFilteredSchedule();
     } catch (error) {
       console.error("Ошибка при удалении расписания:", error);
     }
   };
-
-  useEffect(() => {
-    getAllSchedule()
-      .then(setSchedule)
-      .catch((error) => console.error("Ошибка загрузки расписания:", error));
-  }, []);
 
   return (
     <div
