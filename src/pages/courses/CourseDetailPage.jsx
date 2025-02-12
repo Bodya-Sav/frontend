@@ -189,9 +189,7 @@ export default function CourseDetailPage() {
             course.topics.map((topic) => (
               <div
                 key={topic.id}
-                onClick={() =>
-                  navigate(`/courses/${course.id}/topics/${topic.id}`)
-                }
+                onClick={() => navigate(`/${course.id}/topics/${topic.id}`)}
                 style={{
                   border: "1px solid #ccc",
                   padding: "10px",
