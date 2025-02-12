@@ -86,9 +86,9 @@
 // }
 
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@telegram-apps/telegram-ui";
-import { BiPencil, BiPlus } from "react-icons/bi";
+import { BiArrowBack, BiPencil, BiPlusCircle } from "react-icons/bi";
 
 // Статичные данные для темы
 const staticTopic = {
@@ -102,6 +102,7 @@ const staticTopic = {
 
 export default function TopicDetailPage() {
   const { courseId, topicId } = useParams();
+  const navigate = useNavigate();
   const [topic, setTopic] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
@@ -122,6 +123,13 @@ export default function TopicDetailPage() {
   return (
     <div style={{ padding: "20px" }}>
       <header style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        {/* Кнопка "Назад" */}
+        <Button
+          onClick={() => navigate(-1)}
+          style={{ backgroundColor: "transparent", border: "none" }}
+        >
+          <BiArrowBack size={24} />
+        </Button>
         {editMode ? (
           <>
             <input
@@ -131,20 +139,20 @@ export default function TopicDetailPage() {
               style={{ fontSize: "24px" }}
             />
             <Button onClick={handleUpdateTopic}>
-              <BiPencil />
+              <BiPencil size={24} />
             </Button>
             <Button onClick={() => setEditMode(false)}>Отмена</Button>
           </>
         ) : (
           <>
-            <h2>{topic.title}</h2>
+            <h2 style={{ margin: 0 }}>{topic.title}</h2>
             <Button
               onClick={() => {
                 setEditMode(true);
                 setEditedTitle(topic.title);
               }}
             >
-              <BiPencil />
+              <BiPencil size={24} />
             </Button>
           </>
         )}
@@ -161,8 +169,9 @@ export default function TopicDetailPage() {
         </ul>
         <Button
           onClick={() => alert("Форма добавления вопроса пока не реализована")}
+          style={{ marginTop: "20px" }}
         >
-          <BiPlus /> Добавить вопрос
+          <BiPlusCircle size={24} /> Добавить вопрос
         </Button>
       </section>
     </div>

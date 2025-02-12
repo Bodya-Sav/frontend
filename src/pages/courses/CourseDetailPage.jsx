@@ -99,9 +99,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@telegram-apps/telegram-ui";
-import { BiPencil, BiPlus } from "react-icons/bi";
+import { BiArrowBack, BiPencil, BiPlusCircle } from "react-icons/bi";
 
-// Статичные данные для примера (в реальном случае они берутся из courses)
+// Для примера используем статичные данные
 const staticCourses = [
   {
     id: 1,
@@ -147,6 +147,13 @@ export default function CourseDetailPage() {
   return (
     <div style={{ padding: "20px" }}>
       <header style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        {/* Кнопка "Назад" */}
+        <Button
+          onClick={() => navigate(-1)}
+          style={{ backgroundColor: "transparent", border: "none" }}
+        >
+          <BiArrowBack size={24} />
+        </Button>
         {editMode ? (
           <>
             <input
@@ -156,20 +163,20 @@ export default function CourseDetailPage() {
               style={{ fontSize: "24px" }}
             />
             <Button onClick={handleUpdateCourse}>
-              <BiPencil /> {/* Можно заменить текстом "Сохранить" */}
+              <BiPencil size={24} />
             </Button>
             <Button onClick={() => setEditMode(false)}>Отмена</Button>
           </>
         ) : (
           <>
-            <h2>{course.title}</h2>
+            <h2 style={{ margin: 0 }}>{course.title}</h2>
             <Button
               onClick={() => {
                 setEditMode(true);
                 setEditedTitle(course.title);
               }}
             >
-              <BiPencil />
+              <BiPencil size={24} />
             </Button>
           </>
         )}
@@ -182,7 +189,9 @@ export default function CourseDetailPage() {
             course.topics.map((topic) => (
               <div
                 key={topic.id}
-                onClick={() => navigate(`/${course.id}/topics/${topic.id}`)}
+                onClick={() =>
+                  navigate(`/courses/${course.id}/topics/${topic.id}`)
+                }
                 style={{
                   border: "1px solid #ccc",
                   padding: "10px",
@@ -199,8 +208,9 @@ export default function CourseDetailPage() {
         </div>
         <Button
           onClick={() => alert("Форма добавления темы пока не реализована")}
+          style={{ marginTop: "20px" }}
         >
-          <BiPlus /> Добавить тему
+          <BiPlusCircle size={24} /> Добавить тему
         </Button>
       </section>
     </div>
