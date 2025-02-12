@@ -2,11 +2,32 @@ import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 
 import { AuthContext } from "../../context/AuthContext";
-import { addCource, getAllCourses } from "../../services/CourseService";
+// import { addCource, getAllCourses } from "../../services/CourseService";
 
 export default function AddCourceComponent({ setCourses }) {
   const { isSuper, isAdmin, user_id } = useContext(AuthContext);
   const [courseName, setCourseName] = useState("");
+
+  // const handleCreateCourse = async () => {
+  //   if (!courseName) {
+  //     alert("Введите название курса");
+  //     return;
+  //   }
+  //   try {
+  //     const res = await addCource({ id: user_id, title: courseName });
+  //     console.log("Курс успешно добавлен:", res);
+  //     // можно очистить инпут после успешного запроса
+  //     setCourseName("");
+
+  //     getAllCourses()
+  //       .then(setCourses)
+  //       .catch((error) =>
+  //         console.error("Ошибка загрузки пользователей:", error)
+  //       );
+  //   } catch (error) {
+  //     console.error("Ошибка при добавлении курса:", error);
+  //   }
+  // };
 
   const handleCreateCourse = async () => {
     if (!courseName) {
@@ -14,16 +35,21 @@ export default function AddCourceComponent({ setCourses }) {
       return;
     }
     try {
-      const res = await addCource({ id: user_id, title: courseName });
-      console.log("Курс успешно добавлен:", res);
-      // можно очистить инпут после успешного запроса
-      setCourseName("");
+      // Здесь можно имитировать добавление курса.
+      // Например, создаём новый объект курса и добавляем его в список:
+      const newCourse = {
+        id: courses.result.length + 1, // простое увеличение id
+        title: courseName,
+        topics: [],
+        // можно добавить другие данные, например, user_id и т.д.
+      };
 
-      getAllCourses()
-        .then(setCourses)
-        .catch((error) =>
-          console.error("Ошибка загрузки пользователей:", error)
-        );
+      // Обновляем состояние, добавляя новый курс
+      setCourses((prev) => ({
+        result: [...prev.result, newCourse],
+      }));
+      console.log("Курс успешно добавлен:", newCourse);
+      setCourseName("");
     } catch (error) {
       console.error("Ошибка при добавлении курса:", error);
     }

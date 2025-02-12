@@ -45,46 +45,93 @@
 //   );
 // }
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllCourses } from "../services/CourseService";
 import { Button } from "@telegram-apps/telegram-ui";
 
+import AddCourceComponent from "../components/courses/AddCourceComponent";
+import ListOfCoursesComponent from "../components/courses/ListOfCoursesComponent";
+import { AuthContext } from "../context/AuthContext";
+
 export default function CoursesPage() {
-  const [courses, setCourses] = useState(null);
+  const { isSuper, isAdmin, user_id } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getAllCourses()
-      .then(setCourses)
-      .catch((error) => console.error("Ошибка загрузки курсов:", error));
-  }, []);
+  // useEffect(() => {
+  //   getAllCourses()
+  //     .then(setCourses)
+  //     .catch((error) => console.error("Ошибка загрузки курсов:", error));
+  // }, []);
+
+  // Статичные данные для проверки
+  const [courses, setCourses] = useState({
+    result: [
+      {
+        id: 1,
+        title: "Курс по React",
+        topics: [
+          { id: 101, title: "Основы React" },
+          { id: 102, title: "React Hooks" },
+        ],
+      },
+      {
+        id: 2,
+        title: "Курс по Node.js",
+        topics: [
+          { id: 201, title: "Основы Node.js" },
+          { id: 202, title: "Express.js" },
+        ],
+      },
+    ],
+  });
+
+  // return (
+  //   <div style={{ padding: "20px" }}>
+  //     <h2>Курсы</h2>
+  //     {courses && courses.result ? (
+  //       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+  //         {courses.result.map((course) => (
+  //           <div
+  //             key={course.id}
+  //             onClick={() => navigate(`/${course.id}`)}
+  //             style={{
+  //               border: "1px solid #ccc",
+  //               padding: "10px",
+  //               borderRadius: "8px",
+  //               cursor: "pointer",
+  //               width: "200px",
+  //               textAlign: "center",
+  //             }}
+  //           >
+  //             <h3>{course.title}</h3>
+  //           </div>
+  //         ))}
+  //       </div>
+  //     ) : (
+  //       <p>Загрузка курсов...</p>
+  //     )}
+  //   </div>
+  // );
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>Курсы</h2>
-      {courses && courses.result ? (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-          {courses.result.map((course) => (
-            <div
-              key={course.id}
-              onClick={() => navigate(`/${course.id}`)}
-              style={{
-                border: "1px solid #ccc",
-                padding: "10px",
-                borderRadius: "8px",
-                cursor: "pointer",
-                width: "200px",
-                textAlign: "center",
-              }}
-            >
-              <h3>{course.title}</h3>
-            </div>
-          ))}
-        </div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyItems: "center",
+        height: "auto",
+        marginBottom: "100px",
+      }}
+    >
+      <h2>Страница с курсами</h2>
+      {isAdmin && user_id !== 1 ? (
+        <AddCourceComponent courses={courses} setCourses={setCourses} />
       ) : (
-        <p>Загрузка курсов...</p>
+        <h2>Вы не админ</h2>
       )}
+      <ListOfCoursesComponent courses={courses} />
     </div>
   );
 }
