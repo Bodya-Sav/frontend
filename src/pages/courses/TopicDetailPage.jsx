@@ -91,24 +91,14 @@ import { Button } from "@telegram-apps/telegram-ui";
 import { BiArrowBack, BiPencil, BiPlusCircle } from "react-icons/bi";
 
 // Статичные данные для темы
-const staticTopic = [
-  {
-    id: 101,
-    title: "Основы React",
-    questions: [
-      { id: 1, text: "Что такое JSX?" },
-      { id: 2, text: "Что такое компоненты?" },
-    ],
-  },
-  {
-    id: 201,
-    title: "Основы Node.js",
-    questions: [
-      { id: 1, text: "Что такое Node.js?" },
-      { id: 2, text: "Как работает Node.js?" },
-    ],
-  },
-];
+const staticTopic = {
+  id: 101,
+  title: "Основы React",
+  questions: [
+    { id: 1, text: "Что такое JSX?" },
+    { id: 2, text: "Что такое компоненты?" },
+  ],
+};
 
 export default function TopicDetailPage() {
   const { courseId, topicId } = useParams();
