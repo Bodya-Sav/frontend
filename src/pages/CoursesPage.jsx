@@ -45,26 +45,15 @@
 //   );
 // }
 
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { getAllCourses } from "../services/CourseService";
-import { Button } from "@telegram-apps/telegram-ui";
-
+import React, { useState, useContext } from "react";
 import AddCourceComponent from "../components/courses/AddCourceComponent";
 import ListOfCoursesComponent from "../components/courses/ListOfCoursesComponent";
 import { AuthContext } from "../context/AuthContext";
 
 export default function CoursesPage() {
   const { isSuper, isAdmin, user_id } = useContext(AuthContext);
-  const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   getAllCourses()
-  //     .then(setCourses)
-  //     .catch((error) => console.error("Ошибка загрузки курсов:", error));
-  // }, []);
-
-  // Статичные данные для проверки
+  // Статичные данные для курсов
   const [courses, setCourses] = useState({
     result: [
       {
@@ -86,42 +75,12 @@ export default function CoursesPage() {
     ],
   });
 
-  // return (
-  //   <div style={{ padding: "20px" }}>
-  //     <h2>Курсы</h2>
-  //     {courses && courses.result ? (
-  //       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
-  //         {courses.result.map((course) => (
-  //           <div
-  //             key={course.id}
-  //             onClick={() => navigate(`/${course.id}`)}
-  //             style={{
-  //               border: "1px solid #ccc",
-  //               padding: "10px",
-  //               borderRadius: "8px",
-  //               cursor: "pointer",
-  //               width: "200px",
-  //               textAlign: "center",
-  //             }}
-  //           >
-  //             <h3>{course.title}</h3>
-  //           </div>
-  //         ))}
-  //       </div>
-  //     ) : (
-  //       <p>Загрузка курсов...</p>
-  //     )}
-  //   </div>
-  // );
-
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyItems: "center",
-        height: "auto",
         marginBottom: "100px",
       }}
     >
