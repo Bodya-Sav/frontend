@@ -53,7 +53,7 @@ export default function ListOfCoursesComponent({ courses }) {
         {courses.result.map((course) => (
           <div
             key={course.id}
-            onClick={() => navigate(`/courses/${course.id}`)}
+            onClick={() => navigate(`/${course.id}`)}
             style={{
               border: "1px solid #ccc",
               padding: "10px",
