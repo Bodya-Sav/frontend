@@ -4,8 +4,14 @@ import { useLocation } from "react-router-dom";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { ROUTES } from "../../navigation/routes"; // если у вас определён ROUTES.COURSES
 
+import { AuthContext } from "../../context/AuthContext";
+
 const TopPanelComponent = () => {
+  const { isAdmin } = useContext(AuthContext);
   const location = useLocation();
+
+  // Если пользователь не админ, не отображаем панель
+  if (!isAdmin) return null;
 
   // Если на странице курсов (или другом нужном маршруте), не рендерим шапку
   if (location.pathname === ROUTES.COURSES) {
