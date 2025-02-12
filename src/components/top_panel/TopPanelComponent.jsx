@@ -10,7 +10,9 @@ const TopPanelComponent = () => {
   // Если на странице курсов (или другом нужном маршруте), не рендерим шапку
   if (
     location.pathname === ROUTES.COURSES ||
-    location.pathname === "/courses"
+    location.pathname === "/courses" ||
+    location.pathname === "/:courseId" ||
+    location.pathname === "/:courseId/topics/:topicId"
   ) {
     return null;
   }
