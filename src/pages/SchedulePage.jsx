@@ -122,8 +122,9 @@ export default function SchedulePage() {
       if (selectedCourse) {
         // Предполагается, что каждое расписание имеет поле course_id
         const filtered = data.result.filter(
-          (item) => item.course_id === selectedCourse.id
+          (item) => Number(item.course_id) === Number(selectedCourse.id)
         );
+
         setSchedule({ ...data, result: filtered });
       } else {
         // Если курс не выбран, можно либо ничего не показывать, либо показывать всё
