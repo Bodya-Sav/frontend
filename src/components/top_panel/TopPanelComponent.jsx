@@ -8,11 +8,15 @@ const TopPanelComponent = () => {
   const location = useLocation();
 
   // Если на странице курсов (или другом нужном маршруте), не рендерим шапку
+  if (location.pathname === ROUTES.COURSES) {
+    return null;
+  }
+
+  // Если текущий путь соответствует деталям курса или темы, скрываем панель.
+  // Предполагаем, что такие маршруты начинаются с числа (courseId) или содержат "/topics/"
   if (
-    location.pathname === ROUTES.COURSES ||
-    location.pathname === "/courses" ||
-    location.pathname === "/:courseId" ||
-    location.pathname === "/:courseId/topics/:topicId"
+    /^\/\d+/.test(location.pathname) ||
+    location.pathname.includes("/topics/")
   ) {
     return null;
   }
