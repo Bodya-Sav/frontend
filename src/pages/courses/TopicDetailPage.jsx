@@ -98,6 +98,12 @@ const staticTopic = {
     { id: 1, text: "Что такое JSX?" },
     { id: 2, text: "Что такое компоненты?" },
   ],
+  id: 201,
+  title: "Основы Node.js",
+  questions: [
+    { id: 1, text: "Что такое Node.js?" },
+    { id: 2, text: "Как работает Node.js?" },
+  ],
 };
 
 export default function TopicDetailPage() {
