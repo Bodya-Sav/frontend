@@ -7,14 +7,13 @@ import TopPanelComponent from "./components/top_panel/TopPanelComponent";
 
 import { checkAuth } from "./services/AuthService";
 
-import { AuthContext } from "./context/AuthContext";
+import { useAuthStore } from "./context/useAuthStore";
 
 const webapp = window.Telegram.WebApp;
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const { setIsAuth, isauth, setIsAdmin, setIsSuper, setId } =
-    useContext(AuthContext);
+  const { setIsAuth, isauth, setIsAdmin, setIsSuper, setId } = useAuthStore();
 
   useEffect(() => {
     webapp.ready();

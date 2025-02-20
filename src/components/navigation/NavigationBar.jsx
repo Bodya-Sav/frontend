@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@telegram-apps/telegram-ui";
-import { AuthContext } from "../../context/AuthContext";
+
+import { useAuthStore } from "../../context/useAuthStore";
 
 import { navItems } from "./navItems";
 
 const NavigationBar = () => {
-  const { isSuper, isAdmin } = useContext(AuthContext);
+  const { isSuper, isAdmin } = useAuthStore();
   const location = useLocation();
   const navigate = useNavigate();
 

@@ -4,10 +4,10 @@ import { useLocation } from "react-router-dom";
 import { BiChevronDown, BiChevronUp } from "react-icons/bi";
 import { ROUTES } from "../../navigation/routes"; // если у вас определён ROUTES.COURSES
 
-import { AuthContext } from "../../context/AuthContext";
+import { useAuthStore } from "../../context/useAuthStore";
 
 const TopPanelComponent = () => {
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin } = useAuthStore();
   const location = useLocation();
 
   // Если пользователь не админ, не отображаем панель

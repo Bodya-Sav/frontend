@@ -11,11 +11,11 @@ import {
   deleteSchedule,
 } from "../services/ScheduleService";
 
-import { AuthContext } from "../context/AuthContext";
+import { useAuthStore } from "../context/useAuthStore";
 import { CourseContext } from "../context/CourseContext";
 
 // export default function SchedulePage() {
-//   const { isAdmin } = useContext(AuthContext);
+//   const { isAdmin } = useAuthStore();
 //   const { selectedCourse } = useContext(CourseContext); // Получаем выбранный курс
 
 //   const [schedule, setSchedule] = useState(null);
@@ -106,7 +106,7 @@ import { CourseContext } from "../context/CourseContext";
 // }
 
 export default function SchedulePage() {
-  const { isAdmin } = useContext(AuthContext);
+  const { isAdmin } = useAuthStore();
   const { selectedCourse } = useContext(CourseContext); // Получаем выбранный курс
 
   const [schedule, setSchedule] = useState(null);
