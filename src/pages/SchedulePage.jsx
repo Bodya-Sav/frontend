@@ -11,11 +11,11 @@ import {
   deleteSchedule,
 } from "../services/ScheduleService";
 
-import { useAuthStore } from "../context/useAuthStore";
+import { AuthContext } from "../context/useAuthStore";
 import { CourseContext } from "../context/CourseContext";
 
 // export default function SchedulePage() {
-//   const { isAdmin } = useAuthStore();
+//   const { isAdmin } = useContext(AuthContext);
 //   const { selectedCourse } = useContext(CourseContext); // Получаем выбранный курс
 
 //   const [schedule, setSchedule] = useState(null);
@@ -106,7 +106,7 @@ import { CourseContext } from "../context/CourseContext";
 // }
 
 export default function SchedulePage() {
-  const { isAdmin } = useAuthStore();
+  const { isAdmin } = useContext(AuthContext);
   const { selectedCourse } = useContext(CourseContext); // Получаем выбранный курс
 
   const [schedule, setSchedule] = useState(null);
@@ -137,7 +137,7 @@ export default function SchedulePage() {
 
   // Перезагружаем расписание при монтировании и когда выбранный курс изменяется
   useEffect(() => {
-    //fetchFilteredSchedule();
+    fetchFilteredSchedule();
   }, [selectedCourse]);
 
   const handleSelectDateTime = async (data) => {

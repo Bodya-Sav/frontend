@@ -5,10 +5,10 @@ import ListOfCoursesComponent from "../components/courses/ListOfCoursesComponent
 
 import { getAllCourses } from "../services/CourseService";
 
-import { useAuthStore } from "../context/useAuthStore";
+import { AuthContext } from "../context/useAuthStore";
 
 export default function CoursesPage() {
-  const { isSuper, isAdmin, user_id } = useAuthStore();
+  const { isSuper, isAdmin, user_id } = useContext(AuthContext);
   const [courses, setCourses] = useState(null);
 
   const fetchCourses = () => {
@@ -48,10 +48,10 @@ export default function CoursesPage() {
 // import React, { useState, useContext } from "react";
 // import AddCourceComponent from "../components/courses/AddCourceComponent";
 // import ListOfCoursesComponent from "../components/courses/ListOfCoursesComponent";
-// import { useAuthStore } from "../context/useAuthStore";
+// import { AuthContext } from "../context/useAuthStore";
 
 // export default function CoursesPage() {
-//   const { isSuper, isAdmin, user_id } = useAuthStore();
+//   const { isSuper, isAdmin, user_id } = useContext(AuthContext);
 
 //   // Статичные данные для курсов
 //   const [courses, setCourses] = useState({

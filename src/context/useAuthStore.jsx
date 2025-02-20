@@ -1,40 +1,40 @@
-// import React, { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
 
-// export const AuthContext = createContext();
+export const AuthContext = createContext();
 
-// export const AuthProvider = ({ children }) => {
-//   const [user_id, setId] = useState("");
-//   const [isAdmin, setIsAdmin] = useState(false);
-//   const [isauth, setIsAuth] = useState(false);
-//   const [isSuper, setIsSuper] = useState(false);
+export const AuthProvider = ({ children }) => {
+  const [user_id, setId] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isauth, setIsAuth] = useState(false);
+  const [isSuper, setIsSuper] = useState(false);
 
-//   return (
-//     <AuthContext.Provider
-//       value={{
-//         isAdmin,
-//         setIsAdmin,
-//         isauth,
-//         setIsAuth,
-//         isSuper,
-//         setIsSuper,
-//         user_id,
-//         setId,
-//       }}
-//     >
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
+  return (
+    <AuthContext.Provider
+      value={{
+        isAdmin,
+        setIsAdmin,
+        isauth,
+        setIsAuth,
+        isSuper,
+        setIsSuper,
+        user_id,
+        setId,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-import { create } from "zustand";
+// import { create } from "zustand";
 
-export const useAuthStore = create((set) => ({
-  user_id: "",
-  isAdmin: false,
-  isauth: true,
-  isSuper: false,
-  setId: (id) => set({ user_id: id }),
-  setIsAdmin: (value) => set({ isAdmin: value }),
-  setIsAuth: (value) => set({ isauth: value }),
-  setIsSuper: (value) => set({ isSuper: value }),
-}));
+// export const useAuthStore = create((set) => ({
+//   user_id: "",
+//   isAdmin: false,
+//   isauth: true,
+//   isSuper: false,
+//   setId: (id) => set({ user_id: id }),
+//   setIsAdmin: (value) => set({ isAdmin: value }),
+//   setIsAuth: (value) => set({ isauth: value }),
+//   setIsSuper: (value) => set({ isSuper: value }),
+// }));
