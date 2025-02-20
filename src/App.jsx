@@ -20,10 +20,10 @@ function App() {
     const chat_id = webapp.initDataUnsafe.user.id;
     checkAuth(chat_id)
       .then((data) => {
-        if (data.id === 1) setIsSuper(true);
-        setIsAdmin(data.isAdmin);
-        setIsAuth(data.isAuth);
-        setId(data.id);
+        if (data.result.id === 1) setIsSuper(true);
+        setIsAdmin(data.result.isAdmin);
+        setIsAuth(data.result.isAuth);
+        setId(data.result.id);
         setLoading(false);
       })
       .catch((error) => console.error("Ошибка авторизации:", error));
