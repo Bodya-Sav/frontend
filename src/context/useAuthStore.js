@@ -31,10 +31,10 @@ import { create } from "zustand";
 export const useAuthStore = create((set) => ({
   user_id: "",
   isAdmin: false,
-  isAuth: false,
+  isauth: true,
   isSuper: false,
   setId: (id) => set({ user_id: id }),
   setIsAdmin: (value) => set({ isAdmin: value }),
-  setIsAuth: (value) => set({ isAuth: value }),
+  setIsAuth: (value) => set({ isauth: value }),
   setIsSuper: (value) => set({ isSuper: value }),
 }));
