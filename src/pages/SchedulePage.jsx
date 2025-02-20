@@ -137,7 +137,7 @@ export default function SchedulePage() {
 
   // Перезагружаем расписание при монтировании и когда выбранный курс изменяется
   useEffect(() => {
-    fetchFilteredSchedule();
+    //fetchFilteredSchedule();
   }, [selectedCourse]);
 
   const handleSelectDateTime = async (data) => {
