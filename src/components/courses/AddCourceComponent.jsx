@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 
-import { useAuthStore } from "../../context/useAuthStore";
+import { AuthContext } from "../../context/useAuthStore";
 import { addCource, getAllCourses } from "../../services/CourseService";
 
 export default function AddCourceComponent({ setCourses }) {
-  const { isSuper, isAdmin, user_id } = useAuthStore();
+  const { isSuper, isAdmin, user_id } = useContext(AuthContext);
   const [courseName, setCourseName] = useState("");
 
   const handleCreateCourse = async () => {
