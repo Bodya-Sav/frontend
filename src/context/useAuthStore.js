@@ -28,7 +28,7 @@
 
 import create from "zustand";
 
-export default const useAuthStore = create((set) => ({
+export const useAuthStore = create((set) => ({
   user_id: "",
   isAdmin: false,
   isAuth: false,
