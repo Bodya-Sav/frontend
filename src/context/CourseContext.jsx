@@ -8,19 +8,19 @@ export const CourseProvider = ({ children }) => {
   const [courseList, setCourseList] = useState([]);
 
   // Загружаем список курсов при монтировании провайдера (для администратора)
-  // useEffect(() => {
-  //   getAllCourses()
-  //     .then((data) => {
-  //       if (data && data.result) {
-  //         setCourseList(data.result);
-  //         // По умолчанию можно выбрать первый курс, если список не пустой
-  //         if (data.result.length > 0) {
-  //           setSelectedCourse(data.result[0]);
-  //         }
-  //       }
-  //     })
-  //     .catch((error) => console.error("Ошибка загрузки списка курсов:", error));
-  // }, []);
+  useEffect(() => {
+    getAllCourses()
+      .then((data) => {
+        if (data && data.result) {
+          setCourseList(data.result);
+          // По умолчанию можно выбрать первый курс, если список не пустой
+          if (data.result.length > 0) {
+            setSelectedCourse(data.result[0]);
+          }
+        }
+      })
+      .catch((error) => console.error("Ошибка загрузки списка курсов:", error));
+  }, []);
 
   return (
     <CourseContext.Provider
