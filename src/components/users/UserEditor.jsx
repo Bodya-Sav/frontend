@@ -2,12 +2,12 @@ import React, { useState, useContext } from "react";
 import { Button } from "@telegram-apps/telegram-ui";
 import { updateUserInfo, getAllUsers } from "../../services/UserService";
 
-import { useAuthStore } from "../../context/useAuthStore";
+import { AuthContext } from "../../context/useAuthStore";
 
 const UserEditor = ({ users, onCancel, onUpdate }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [editedUser, setEditedUser] = useState(null);
-  const { isSuper } = useAuthStore();
+  const { isSuper } = useContext(AuthContext);
 
   // Обработчик выбора пользователя для редактирования
   const handleUserSelect = (user) => {
